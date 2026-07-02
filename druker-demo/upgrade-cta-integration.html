@@ -1,0 +1,164 @@
+<!--
+  UPGRADE CTA — PLAN LITE AGOTADO
+  ================================
+  Integrar en deploy-vercel/app/index.html (o donde esté el chat frontend).
+
+  1. Pegar el bloque <style> dentro del <style> existente del chat.
+  2. Copiar la función showUpgradeCTA() y la modificación del fetch.
+  3. Buscar donde el frontend hace fetch('/api/chat', ...) y agregar el bloque de manejo 403.
+-->
+
+<!-- ══════════════════════════════════════════════════════
+     CSS — agregar al <style> existente del chat
+     ══════════════════════════════════════════════════════ -->
+<style>
+.upgrade-cta-bubble {
+  margin: .75rem 0 .75rem 0;
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(140deg, #0f2030 0%, #132430 100%);
+  border: 1px solid #2d9b8a;
+  border-left-width: 3px;
+  border-radius: 10px;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  animation: fadeSlideIn .25s ease;
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.upgrade-cta-icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(45,155,138,.15);
+  border: 1px solid rgba(45,155,138,.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  color: #2d9b8a;
+}
+
+.upgrade-cta-body {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.upgrade-cta-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ddeaf0;
+  line-height: 1.4;
+}
+
+.upgrade-cta-desc {
+  font-size: 13px;
+  color: #5b8ea0;
+  line-height: 1.55;
+}
+
+.upgrade-cta-btn {
+  display: inline-block;
+  margin-top: .25rem;
+  padding: .55rem 1.1rem;
+  background: #2d9b8a;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background .15s;
+  align-self: flex-start;
+}
+
+.upgrade-cta-btn:hover { background: #1e7a6e; }
+</style>
+
+<!-- ══════════════════════════════════════════════════════
+     JS — agregar justo antes del cierre </script> del chat
+     ══════════════════════════════════════════════════════ -->
+<script>
+// Muestra el CTA de upgrade cuando el Plan Lite llega al límite
+function showUpgradeCTA(container) {
+  // No duplicar si ya existe
+  if (container.querySelector('.upgrade-cta-bubble')) return;
+
+  const bubble = document.createElement('div');
+  bubble.className = 'upgrade-cta-bubble';
+  bubble.innerHTML = `
+    <div class="upgrade-cta-icon">◎</div>
+    <div class="upgrade-cta-body">
+      <div class="upgrade-cta-title">Agotaste tus 3 análisis de este mes</div>
+      <div class="upgrade-cta-desc">
+        Con Plan Full puedes hacer análisis ilimitados. Druker recuerda cada sesión,
+        construye tu ICRE y compara decisiones en el tiempo — sin límite mensual.
+      </div>
+      <a href="/inicio?plan=full&ref=limite_lite" class="upgrade-cta-btn">
+        Activar Plan Full →
+      </a>
+    </div>
+  `;
+  container.appendChild(bubble);
+  bubble.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// ── INTEGRACIÓN EN EL FETCH DEL CHAT ──────────────────────────
+// Busca en el código donde el frontend envía el mensaje a /api/chat.
+// Típicamente algo como:
+//
+//   const res = await fetch('/api/chat', { method: 'POST', body: ... });
+//
+// Reemplaza (o modifica) ese bloque por el de abajo:
+
+async function enviarMensaje(mensajes, clienteId, perfil, /* ...otros params */ ) {
+  const messagesContainer = document.getElementById('messages'); // ajustar al ID real
+
+  const res = await fetch('/api/chat', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify({ messages: mensajes, clienteId, perfil /* , ...otros */ })
+  });
+
+  // ── Manejar límite Lite ──────────────────────────────────
+  if (res.status === 403) {
+    const data = await res.json().catch(() => ({}));
+    if (data.upgradeRequired) {
+      showUpgradeCTA(messagesContainer);
+      return null; // detener el flujo normal
+    }
+    // Otros 403 (inactivo, trial expirado)
+    const msg = data.mensaje || 'Tu acceso está pausado. Escribe a contacto@jvstratica.com';
+    agregarMensajeDruker(msg); // función existente que agrega mensajes al chat
+    return null;
+  }
+
+  if (!res.ok) {
+    agregarMensajeDruker('Error de conexión. Intenta de nuevo.');
+    return null;
+  }
+
+  return res.json();
+}
+</script>
+
+<!--
+  CAMBIO DEL NÚMERO DE WHATSAPP
+  ================================
+  El número 3229857756 no está hardcodeado en los archivos JS —
+  puede estar en:
+
+  1. El SYSTEM_PROMPT de chat.js  → busca "322" y reemplaza
+  2. El frontend del chat (index.html / app.js) → busca "322"
+  3. La página de inicio o landing → busca "322"
+
+  Busca en el repo:
+    grep -r "3229857756" deploy-vercel/
+
+  Y reemplaza por: 3115744233
+-->
