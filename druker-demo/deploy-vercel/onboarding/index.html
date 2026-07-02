@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Configura tu Druker · Operatia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:     #0d1a22;
+  --surf:   #132430;
+  --raised: #1a2f3c;
+  --over:   #0a1219;
+  --teal:   #2d9b8a;
+  --teal2:  #3aafa9;
+  --teal-d: rgba(45,155,138,0.13);
+  --teal-b: rgba(45,155,138,0.30);
+  --gold:   #e8a020;
+  --ok:     #4caf78;
+  --err:    #e05555;
+  --t1: #ffffff;
+  --t2: rgba(255,255,255,0.72);
+  --t3: rgba(255,255,255,0.42);
+  --t4: rgba(255,255,255,0.20);
+  --br: rgba(255,255,255,0.09);
+  --br2:rgba(255,255,255,0.17);
+  --f: 'Inter', system-ui, sans-serif;
+  --r: 10px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  height: 100%; background: var(--bg); color: var(--t1);
+  font-family: var(--f); font-size: 15px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── LAYOUT ── */
+#app { display: flex; flex-direction: column; min-height: 100vh; }
+
+/* ── NAV ── */
+nav {
+  flex-shrink: 0; position: sticky; top: 0; z-index: 50;
+  background: var(--over); border-bottom: 1px solid var(--br);
+  padding: 0 24px; height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+.logo-d {
+  width: 28px; height: 28px; border-radius: 6px;
+  background: var(--teal); display: flex; align-items: center;
+  justify-content: center; font-size: 13px; font-weight: 700; color: #fff;
+}
+.logo-name { font-size: 15px; font-weight: 600; color: var(--t1); letter-spacing: -.01em; }
+
+/* ── PROGRESS ── */
+.progress-wrap {
+  flex-shrink: 0; padding: 10px 24px 0;
+  background: var(--over); border-bottom: 1px solid var(--br);
+}
+.progress-labels {
+  display: flex; justify-content: space-between; margin-bottom: 6px;
+}
+.progress-label { font-size: 11px; color: var(--t3); font-weight: 500; }
+.progress-label.active { color: var(--teal); font-weight: 600; }
+.progress-label.done { color: var(--ok); }
+.progress-bar {
+  height: 3px; background: var(--br); border-radius: 99px;
+  margin-bottom: 10px; overflow: hidden;
+}
+.progress-fill {
+  height: 100%; background: var(--teal); border-radius: 99px;
+  transition: width .4s ease;
+}
+
+/* ── SCREENS ── */
+.screen { display: none; flex: 1; flex-direction: column; }
+.screen.active { display: flex; }
+.screen-inner {
+  flex: 1; max-width: 600px; width: 100%; margin: 0 auto;
+  padding: 36px 24px 100px;
+}
+
+/* ── TYPOGRAPHY ── */
+.step-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--teal); margin-bottom: 8px;
+}
+.step-title {
+  font-size: 22px; font-weight: 800; color: var(--t1);
+  letter-spacing: -.02em; margin-bottom: 6px; line-height: 1.25;
+}
+.step-sub {
+  font-size: 13px; color: var(--t3); margin-bottom: 28px; line-height: 1.55;
+}
+
+/* ── FIELDS ── */
+.field { margin-bottom: 22px; }
+.field-label {
+  display: block; font-size: 12px; font-weight: 600;
+  color: var(--t2); margin-bottom: 8px; letter-spacing: .01em;
+}
+.field-input {
+  width: 100%; background: var(--surf);
+  border: 1px solid var(--br2); border-radius: var(--r);
+  padding: 12px 15px; font-family: var(--f); font-size: 15px;
+  color: var(--t1); outline: none; transition: border-color .15s, box-shadow .15s;
+}
+.field-input::placeholder { color: var(--t4); }
+.field-input:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(45,155,138,.11);
+}
+
+/* ── CHIPS ── */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  padding: 7px 14px; border-radius: 99px; font-size: 13px; font-weight: 500;
+  cursor: pointer; border: 1.5px solid var(--br2); background: var(--surf);
+  color: var(--t2); transition: all .15s; user-select: none; white-space: nowrap;
+  font-family: var(--f);
+}
+.chip:hover { border-color: var(--teal); color: var(--teal); }
+.chip.selected {
+  background: var(--teal-d); border-color: var(--teal);
+  color: var(--teal); font-weight: 600;
+}
+
+/* ── ARCHETYPE CARDS ── */
+.arch-options { display: flex; flex-direction: column; gap: 8px; }
+.arch-opt {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 16px; border-radius: var(--r);
+  border: 1.5px solid var(--br2); background: var(--surf);
+  cursor: pointer; transition: all .15s; user-select: none;
+}
+.arch-opt:hover { border-color: var(--teal-b); background: var(--raised); }
+.arch-opt.selected {
+  border-color: var(--teal); background: var(--teal-d);
+}
+.arch-radio {
+  width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
+  border: 2px solid var(--br2); transition: all .15s;
+  display: flex; align-items: center; justify-content: center;
+}
+.arch-opt.selected .arch-radio {
+  border-color: var(--teal); background: var(--teal);
+}
+.arch-radio::after {
+  content: ''; width: 7px; height: 7px; border-radius: 50%;
+  background: #fff; opacity: 0; transition: opacity .15s;
+}
+.arch-opt.selected .arch-radio::after { opacity: 1; }
+.arch-opt-text { font-size: 14px; color: var(--t2); line-height: 1.4; }
+.arch-opt.selected .arch-opt-text { color: var(--t1); font-weight: 500; }
+
+/* ── TEXTAREA ── */
+.decision-area {
+  width: 100%; background: var(--surf);
+  border: 1.5px solid var(--br2); border-radius: var(--r);
+  padding: 13px 16px; font-family: var(--f); font-size: 15px;
+  color: var(--t1); outline: none; resize: none; line-height: 1.6;
+  min-height: 70px; max-height: 140px;
+  transition: border-color .15s, box-shadow .15s;
+}
+.decision-area::placeholder { color: var(--t4); }
+.decision-area:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(45,155,138,.11);
+}
+.char-hint { font-size: 11px; color: var(--t4); text-align: right; margin-top: 4px; }
+
+/* ── BOTTOM CTA (fixed) ── */
+.bottom-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  padding: 14px 24px; background: var(--over);
+  border-top: 1px solid var(--br); z-index: 40;
+}
+.bottom-bar-inner { max-width: 600px; margin: 0 auto; }
+.btn-next {
+  width: 100%; padding: 14px; border-radius: 11px;
+  background: var(--teal); color: #fff; border: none;
+  font-family: var(--f); font-size: 15px; font-weight: 700;
+  cursor: pointer; transition: background .15s, opacity .15s;
+}
+.btn-next:hover:not(:disabled) { background: var(--teal2); }
+.btn-next:disabled { opacity: .35; cursor: not-allowed; }
+
+/* ── CHAT SCREEN ── */
+#screen-chat { display: none; flex-direction: column; height: calc(100vh - 52px - 43px); }
+#screen-chat.active { display: flex; }
+
+.chat-context-bar {
+  flex-shrink: 0; background: var(--surf);
+  border-bottom: 1px solid var(--br);
+  padding: 10px 20px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.ctx-tag {
+  font-size: 11px; font-weight: 600; padding: 3px 10px;
+  border-radius: 99px; background: var(--teal-d); border: 1px solid var(--teal-b);
+  color: var(--teal);
+}
+.ctx-info { font-size: 12px; color: var(--t3); }
+.ctx-info b { color: var(--t2); font-weight: 600; }
+
+.chat-msgs {
+  flex: 1; overflow-y: auto; padding: 20px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.chat-msgs::-webkit-scrollbar { width: 4px; }
+.chat-msgs::-webkit-scrollbar-thumb { background: rgba(255,255,255,.07); border-radius: 2px; }
+
+.msg-row { display: flex; gap: 10px; max-width: 680px; }
+.msg-row.user { flex-direction: row-reverse; margin-left: auto; }
+.av {
+  width: 32px; height: 32px; flex-shrink: 0; align-self: flex-start;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: #fff;
+}
+.av.d { background: var(--teal); border-radius: 6px; font-size: 13px; }
+.av.u { background: rgba(255,255,255,.10); border-radius: 50%; font-size: 11px; }
+.bbl {
+  padding: 12px 16px; font-size: 15px; line-height: 1.7;
+  white-space: pre-wrap; word-break: break-word;
+}
+.bbl.d {
+  background: var(--surf); border-left: 3px solid var(--teal);
+  border-radius: 0 10px 10px 10px; color: var(--t1);
+}
+.bbl.u {
+  background: var(--raised); border-right: 3px solid rgba(255,255,255,.12);
+  border-radius: 10px 0 10px 10px; color: var(--t1);
+}
+
+.typing { display: flex; gap: 10px; align-items: center; }
+.dots {
+  padding: 12px 16px; background: var(--surf);
+  border-left: 3px solid var(--teal); border-radius: 0 10px 10px 10px;
+  display: flex; gap: 5px; align-items: center;
+}
+.dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--teal); animation: dp 1.2s ease-in-out infinite;
+}
+.dot:nth-child(2) { animation-delay: .2s; }
+.dot:nth-child(3) { animation-delay: .4s; }
+@keyframes dp { 0%,60%,100%{opacity:.3;transform:scale(.85)} 30%{opacity:1;transform:scale(1)} }
+
+.dashboard-cta {
+  max-width: 680px;
+  margin: 4px 0; padding: 14px 18px;
+  background: var(--surf); border: 1px solid var(--teal-b);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+}
+.dashboard-cta p { font-size: 13px; color: var(--t2); line-height: 1.5; }
+.dashboard-cta a {
+  flex-shrink: 0; padding: 9px 18px; background: var(--teal); color: #fff;
+  border-radius: 8px; font-size: 13px; font-weight: 700; text-decoration: none;
+  white-space: nowrap; transition: background .15s;
+}
+.dashboard-cta a:hover { background: var(--teal2); }
+
+.chat-input-wrap {
+  flex-shrink: 0; padding: 12px 20px;
+  border-top: 1px solid var(--br); background: var(--bg);
+}
+.chat-input-row { display: flex; gap: 10px; align-items: flex-end; }
+#chat-inp {
+  flex: 1; background: var(--raised);
+  border: 1px solid var(--br2); border-radius: 10px;
+  padding: 11px 14px; font-family: var(--f); font-size: 15px;
+  color: var(--t1); resize: none; outline: none; line-height: 1.5;
+  min-height: 46px; max-height: 130px;
+  transition: border-color .15s, box-shadow .15s;
+}
+#chat-inp::placeholder { color: var(--t4); }
+#chat-inp:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(45,155,138,.10); }
+#chat-sbtn {
+  padding: 11px 16px; background: var(--teal); color: #fff;
+  border: none; border-radius: 10px; font-family: var(--f);
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  align-self: flex-end; transition: background .15s, opacity .15s; white-space: nowrap;
+}
+#chat-sbtn:hover:not(:disabled) { background: var(--teal2); }
+#chat-sbtn:disabled { opacity: .35; cursor: not-allowed; }
+.chat-hint { font-size: 10px; color: var(--t4); text-align: right; margin-top: 4px; }
+#chat-err {
+  display: none; font-size: 12px; color: var(--err); margin-top: 6px;
+  padding: 7px 11px; background: rgba(224,85,85,.07);
+  border: 1px solid rgba(224,85,85,.20); border-radius: 6px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 500px) {
+  .screen-inner { padding: 24px 16px 100px; }
+  .step-title { font-size: 19px; }
+  nav, .progress-wrap, .chat-context-bar, .chat-msgs, .chat-input-wrap { padding-inline: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dot { animation: none; opacity: .5; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="/" class="logo">
+    <div class="logo-d">D</div>
+    <span class="logo-name">Druker IA</span>
+  </a>
+  <span id="nav-step" style="font-size:12px;color:var(--t3);font-weight:500">Paso 1 de 2</span>
+</nav>
+
+<!-- ── PROGRESS BAR ── -->
+<div class="progress-wrap" id="progress-wrap">
+  <div class="progress-labels">
+    <span class="progress-label active" id="plbl-1">Tu empresa</span>
+    <span class="progress-label" id="plbl-2">Tres preguntas</span>
+    <span class="progress-label" id="plbl-3">Druker arranca</span>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progress-fill" style="width:10%"></div>
+  </div>
+</div>
+
+<!-- ══ SCREEN 1 — TU EMPRESA ══ -->
+<div class="screen active" id="screen-1">
+  <div class="screen-inner">
+    <div class="step-eyebrow">Paso 1 de 2 · 60 segundos</div>
+    <h1 class="step-title">Tu empresa en 4 campos</h1>
+    <p class="step-sub">Esto es todo lo que Druker necesita para arrancarte con una primera respuesta útil.</p>
+
+    <!-- Nombre -->
+    <div class="field">
+      <label class="field-label" for="f-nombre">¿Cómo se llama tu empresa?</label>
+      <input class="field-input" id="f-nombre" type="text" placeholder="Ej. Servitek SAS" autocomplete="organization" maxlength="80">
+    </div>
+
+    <!-- Sector -->
+    <div class="field">
+      <label class="field-label">¿A qué se dedica?</label>
+      <div class="chips" id="chips-sector">
+        <div class="chip" data-val="Servicios">Servicios</div>
+        <div class="chip" data-val="Manufactura">Manufactura</div>
+        <div class="chip" data-val="Comercio">Comercio</div>
+        <div class="chip" data-val="Construcción">Construcción</div>
+        <div class="chip" data-val="Tecnología">Tecnología</div>
+        <div class="chip" data-val="Agroindustria">Agroindustria</div>
+        <div class="chip" data-val="Salud">Salud</div>
+        <div class="chip" data-val="Educación">Educación</div>
+        <div class="chip" data-val="Transporte">Transporte</div>
+        <div class="chip" data-val="Finanzas">Finanzas</div>
+        <div class="chip" data-val="Inmobiliario">Inmobiliario</div>
+        <div class="chip" data-val="Energía">Energía</div>
+        <div class="chip" data-val="Otro">Otro</div>
+      </div>
+    </div>
+
+    <!-- Tamaño -->
+    <div class="field">
+      <label class="field-label">¿Cuántas personas trabajan en tu empresa?</label>
+      <div class="chips" id="chips-tamano">
+        <div class="chip" data-val="1–5 personas">1–5</div>
+        <div class="chip" data-val="6–15 personas">6–15</div>
+        <div class="chip" data-val="16–50 personas">16–50</div>
+        <div class="chip" data-val="51–200 personas">51–200</div>
+        <div class="chip" data-val="más de 200 personas">+200</div>
+      </div>
+    </div>
+
+    <!-- Ciudad -->
+    <div class="field">
+      <label class="field-label" for="f-ciudad">¿En qué ciudad operan principalmente?</label>
+      <input class="field-input" id="f-ciudad" type="text" placeholder="Ej. Cali" autocomplete="address-level2" maxlength="60">
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <div class="bottom-bar-inner">
+      <button class="btn-next" id="btn-1" disabled onclick="goStep2()">
+        Continuar →
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCREEN 2 — TRES PREGUNTAS ══ -->
+<div class="screen" id="screen-2">
+  <div class="screen-inner">
+    <div class="step-eyebrow">Paso 2 de 2 · 90 segundos</div>
+    <h1 class="step-title">Tres preguntas que definen todo lo importante</h1>
+    <p class="step-sub">Solo una requiere escribir. Las otras dos son un clic.</p>
+
+    <!-- Facturación -->
+    <div class="field">
+      <label class="field-label">¿Cuánto factura en un mes normal?</label>
+      <div class="chips" id="chips-facturacion">
+        <div class="chip" data-val="menos de $50M COP/mes">Menos de $50M</div>
+        <div class="chip" data-val="$50M–$150M COP/mes">$50M–$150M</div>
+        <div class="chip" data-val="$150M–$500M COP/mes">$150M–$500M</div>
+        <div class="chip" data-val="más de $500M COP/mes">Más de $500M</div>
+      </div>
+    </div>
+
+    <!-- Arquetipo -->
+    <div class="field">
+      <label class="field-label">Cuando tomas una decisión importante sin toda la información, ¿qué haces?</label>
+      <div class="arch-options" id="arch-opts">
+        <div class="arch-opt" data-val="datos" onclick="selectArch(this)">
+          <div class="arch-radio"></div>
+          <div class="arch-opt-text">Espero a tener más datos antes de decidir</div>
+        </div>
+        <div class="arch-opt" data-val="rapido" onclick="selectArch(this)">
+          <div class="arch-radio"></div>
+          <div class="arch-opt-text">Decido rápido y ajusto si me equivoco</div>
+        </div>
+        <div class="arch-opt" data-val="consulta" onclick="selectArch(this)">
+          <div class="arch-radio"></div>
+          <div class="arch-opt-text">Consulto con alguien de confianza antes</div>
+        </div>
+        <div class="arch-opt" data-val="escenarios" onclick="selectArch(this)">
+          <div class="arch-radio"></div>
+          <div class="arch-opt-text">Analizo todos los escenarios posibles</div>
+        </div>
+        <div class="arch-opt" data-val="experiencia" onclick="selectArch(this)">
+          <div class="arch-radio"></div>
+          <div class="arch-opt-text">Me guío por lo que ha funcionado antes</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Decisión activa -->
+    <div class="field">
+      <label class="field-label">¿Qué decisión tienes encima ahora mismo?</label>
+      <textarea
+        class="decision-area" id="f-decision"
+        placeholder="Escribe en 1–2 oraciones la decisión que tienes que tomar..."
+        rows="3" maxlength="400"
+        oninput="onDecisionInput(this)"
+      ></textarea>
+      <div class="char-hint"><span id="char-count">0</span>/400</div>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <div class="bottom-bar-inner">
+      <button class="btn-next" id="btn-2" disabled onclick="startDruker()">
+        Empezar con Druker →
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCREEN CHAT — DRUKER ARRANCA ══ -->
+<div class="screen" id="screen-chat">
+
+  <div class="chat-context-bar" id="ctx-bar">
+    <span class="ctx-tag" id="ctx-arch">Druker IA</span>
+    <span class="ctx-info" id="ctx-info">cargando perfil...</span>
+  </div>
+
+  <div class="chat-msgs" id="chat-msgs"></div>
+
+  <div class="chat-input-wrap">
+    <div class="chat-input-row">
+      <textarea
+        id="chat-inp" rows="2"
+        placeholder="Responde a Druker..."
+        disabled
+        oninput="onChatInput(this)"
+        onkeydown="onChatKey(event)"
+      ></textarea>
+      <button id="chat-sbtn" disabled onclick="sendChat()">Enviar →</button>
+    </div>
+    <div class="chat-hint">Enter para enviar · Shift+Enter para nueva línea</div>
+    <div id="chat-err"></div>
+  </div>
+
+</div>
+
+</div><!-- #app -->
+
+<script>
+// ── STATE ──────────────────────────────────────────────────────────────────
+const S = {
+  empresa: '', sector: '', ciudad: '', tamano: '',
+  facturacion: '', arquetipo: '', decision: '',
+};
+const MSGS = []; // {role, content}
+let chatLoading = false;
+let showedDashboardCTA = false;
+
+// ── CHIP HELPERS ──────────────────────────────────────────────────────────
+function initChips(groupId, stateKey, multi = false) {
+  document.querySelectorAll(`#${groupId} .chip`).forEach(c => {
+    c.addEventListener('click', () => {
+      if (!multi) {
+        document.querySelectorAll(`#${groupId} .chip`).forEach(x => x.classList.remove('selected'));
+      }
+      c.classList.toggle('selected');
+      S[stateKey] = multi
+        ? [...document.querySelectorAll(`#${groupId} .chip.selected`)].map(x => x.dataset.val).join(', ')
+        : (c.classList.contains('selected') ? c.dataset.val : '');
+      validate();
+    });
+  });
+}
+
+function selectArch(el) {
+  document.querySelectorAll('.arch-opt').forEach(x => x.classList.remove('selected'));
+  el.classList.add('selected');
+  S.arquetipo = el.dataset.val;
+  validate();
+}
+
+// ── VALIDATION ────────────────────────────────────────────────────────────
+function validate() {
+  const step = currentStep();
+  if (step === 1) {
+    const ok = S.empresa.trim() && S.sector && S.tamano && S.ciudad.trim();
+    document.getElementById('btn-1').disabled = !ok;
+  } else if (step === 2) {
+    const ok = S.facturacion && S.arquetipo && S.decision.trim().length >= 10;
+    document.getElementById('btn-2').disabled = !ok;
+  }
+}
+
+function currentStep() {
+  if (document.getElementById('screen-1').classList.contains('active')) return 1;
+  if (document.getElementById('screen-2').classList.contains('active')) return 2;
+  return 3;
+}
+
+// ── STEP NAVIGATION ────────────────────────────────────────────────────────
+function goStep2() {
+  document.getElementById('screen-1').classList.remove('active');
+  document.getElementById('screen-2').classList.add('active');
+  document.getElementById('nav-step').textContent = 'Paso 2 de 2';
+  document.getElementById('progress-fill').style.width = '55%';
+  document.getElementById('plbl-1').className = 'progress-label done';
+  document.getElementById('plbl-2').className = 'progress-label active';
+  window.scrollTo(0, 0);
+}
+
+// ── START DRUKER ──────────────────────────────────────────────────────────
+async function startDruker() {
+  const btn = document.getElementById('btn-2');
+  btn.textContent = 'Analizando…';
+  btn.disabled = true;
+
+  // Transition to chat
+  document.getElementById('screen-2').classList.remove('active');
+  document.getElementById('progress-fill').style.width = '100%';
+  document.getElementById('plbl-2').className = 'progress-label done';
+  document.getElementById('plbl-3').className = 'progress-label active';
+  document.getElementById('nav-step').textContent = 'Primera sesión';
+  document.getElementById('screen-chat').classList.add('active');
+
+  // Set context bar
+  const ARCH_NAME = {
+    datos: 'Analítico', rapido: 'Dinámico', consulta: 'Colaborativo',
+    escenarios: 'Prudente', experiencia: 'Pragmático'
+  };
+  const archName = ARCH_NAME[S.arquetipo] || 'Druker IA';
+  document.getElementById('ctx-arch').textContent = `Gerente ${archName}`;
+  document.getElementById('ctx-info').innerHTML =
+    `<b>${S.empresa}</b> · ${S.sector} · ${S.tamano}`;
+
+  // Add user's decision as first message
+  const userMsg = { role: 'user', content: S.decision };
+  MSGS.push(userMsg);
+  appendMsg(userMsg);
+  showTyping();
+
+  try {
+    const ctx = {
+      empresa: S.empresa, sector: S.sector, ciudad: S.ciudad,
+      tamano: S.tamano, facturacion: S.facturacion, arquetipo: S.arquetipo,
+    };
+    const res = await fetch('/api/onboarding-chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ context: ctx, messages: MSGS }),
+    });
+    const data = await res.json();
+    hideTyping();
+
+    if (!res.ok) {
+      showChatErr(data.error || 'Algo salió mal. Intenta de nuevo.');
+      return;
+    }
+
+    const drukerMsg = { role: 'assistant', content: data.message };
+    MSGS.push(drukerMsg);
+    appendMsg(drukerMsg);
+
+    // Activate input
+    const inp = document.getElementById('chat-inp');
+    inp.disabled = false;
+    inp.focus();
+    document.getElementById('chat-sbtn').textContent = 'Enviar →';
+
+  } catch {
+    hideTyping();
+    showChatErr('Error de conexión. Recarga la página e intenta de nuevo.');
+  }
+}
+
+// ── CHAT ──────────────────────────────────────────────────────────────────
+async function sendChat() {
+  const inp = document.getElementById('chat-inp');
+  const text = inp.value.trim();
+  if (!text || chatLoading) return;
+
+  const userMsg = { role: 'user', content: text };
+  MSGS.push(userMsg);
+  inp.value = ''; inp.style.height = 'auto';
+  updateChatBtn();
+  appendMsg(userMsg);
+  showTyping();
+  chatLoading = true;
+
+  hideChatErr();
+
+  try {
+    const ctx = {
+      empresa: S.empresa, sector: S.sector, ciudad: S.ciudad,
+      tamano: S.tamano, facturacion: S.facturacion, arquetipo: S.arquetipo,
+    };
+    const res = await fetch('/api/onboarding-chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ context: ctx, messages: MSGS }),
+    });
+    const data = await res.json();
+    hideTyping();
+
+    if (!res.ok) {
+      showChatErr(data.error || 'Algo salió mal. Intenta de nuevo.');
+      return;
+    }
+
+    const drukerMsg = { role: 'assistant', content: data.message };
+    MSGS.push(drukerMsg);
+    appendMsg(drukerMsg);
+
+    // Show dashboard CTA after 2 Druker responses
+    if (!showedDashboardCTA && MSGS.filter(m => m.role === 'assistant').length >= 2) {
+      showedDashboardCTA = true;
+      appendDashboardCTA();
+    }
+
+  } catch {
+    hideTyping();
+    showChatErr('Error de conexión. Intenta de nuevo.');
+  } finally {
+    chatLoading = false;
+    updateChatBtn();
+    inp.focus();
+  }
+}
+
+// ── DOM HELPERS ────────────────────────────────────────────────────────────
+function appendMsg(msg) {
+  const msgs = document.getElementById('chat-msgs');
+  const row = document.createElement('div');
+  row.className = 'msg-row' + (msg.role === 'user' ? ' user' : '');
+  const av = document.createElement('div');
+  av.className = 'av ' + (msg.role === 'assistant' ? 'd' : 'u');
+  av.textContent = msg.role === 'assistant' ? 'D' : initials();
+  const b = document.createElement('div');
+  b.className = 'bbl ' + (msg.role === 'assistant' ? 'd' : 'u');
+  b.textContent = msg.content;
+  row.append(av, b);
+  msgs.appendChild(row);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function initials() {
+  const parts = S.empresa.trim().split(' ');
+  return (parts[0]?.[0] || 'G').toUpperCase() + (parts[1]?.[0] || '').toUpperCase();
+}
+
+let typingEl = null;
+function showTyping() {
+  const msgs = document.getElementById('chat-msgs');
+  const row = document.createElement('div');
+  row.className = 'typing';
+  const av = document.createElement('div');
+  av.className = 'av d'; av.textContent = 'D';
+  const dots = document.createElement('div');
+  dots.className = 'dots';
+  [1,2,3].forEach(() => {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    dots.appendChild(d);
+  });
+  row.append(av, dots);
+  typingEl = row;
+  msgs.appendChild(row);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+function hideTyping() {
+  if (typingEl) { typingEl.remove(); typingEl = null; }
+}
+
+function appendDashboardCTA() {
+  const msgs = document.getElementById('chat-msgs');
+  const div = document.createElement('div');
+  div.className = 'dashboard-cta';
+  div.innerHTML = `
+    <p>Druker ya tiene tu contexto. <strong>Guarda tu perfil</strong> para que recuerde esta conversación y construya tu DRUKER Score.</p>
+    <a href="/inicio">Ir a mi dashboard →</a>
+  `;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showChatErr(msg) {
+  const el = document.getElementById('chat-err');
+  el.textContent = msg; el.style.display = 'block';
+}
+function hideChatErr() {
+  document.getElementById('chat-err').style.display = 'none';
+}
+
+function updateChatBtn() {
+  const btn = document.getElementById('chat-sbtn');
+  const inp = document.getElementById('chat-inp');
+  btn.disabled = chatLoading || !inp.value.trim();
+  btn.textContent = chatLoading ? 'Analizando…' : 'Enviar →';
+}
+
+function onChatInput(el) {
+  updateChatBtn();
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 130) + 'px';
+}
+
+function onChatKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); }
+}
+
+function onDecisionInput(el) {
+  S.decision = el.value;
+  document.getElementById('char-count').textContent = el.value.length;
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 140) + 'px';
+  validate();
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────
+initChips('chips-sector', 'sector');
+initChips('chips-tamano', 'tamano');
+initChips('chips-facturacion', 'facturacion');
+
+document.getElementById('f-nombre').addEventListener('input', e => {
+  S.empresa = e.target.value; validate();
+});
+document.getElementById('f-ciudad').addEventListener('input', e => {
+  S.ciudad = e.target.value; validate();
+});
+</script>
+</body>
+</html>
