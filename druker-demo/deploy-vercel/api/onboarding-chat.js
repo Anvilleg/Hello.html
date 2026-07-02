@@ -2,8 +2,8 @@
 // Primera sesión de Druker post-onboarding
 // Recibe el contexto del perfil recién creado + historial de mensajes
 
-const Anthropic = require('@anthropic-ai/sdk');
-const client = new Anthropic.default({ apiKey: process.env.ANTHROPIC_API_KEY });
+import Anthropic from '@anthropic-ai/sdk';
+const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 const ARCHETYPE_LABEL = {
   datos:       'Analítico',
@@ -52,7 +52,7 @@ TONO: Asesor de confianza que ya conoce el tipo de empresa y el estilo decisiona
 `.trim();
 }
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
