@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planes y Precios — Druker IA</title>
+  <meta name="description" content="Tu asesor decisional por menos de lo que cuesta una hora de consultoría. Planes desde $129.000 COP/mes.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0d1a22;
+      --surface:  #132430;
+      --raised:   #1a2f3c;
+      --border:   #1e3d52;
+      --teal:     #2d9b8a;
+      --teal-dim: #1e7a6e;
+      --teal-faint: rgba(45,155,138,.10);
+      --text:     #ddeaf0;
+      --muted:    #5b8ea0;
+      --amber:    #d4a517;
+      --font:     system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--teal); text-decoration: none; }
+    a:hover { color: #4fc5b2; }
+
+    /* ── Nav ─────────────────────────────────────────────────────── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13,26,34,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-logo {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      color: var(--text);
+      text-transform: uppercase;
+    }
+    .nav-logo span { color: var(--teal); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      font-size: 13.5px;
+      color: var(--muted);
+    }
+    .nav-links a { color: var(--muted); transition: color .15s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.active { color: var(--text); }
+
+    .nav-cta {
+      font-size: 13px;
+      font-weight: 500;
+      background: var(--teal);
+      color: #fff;
+      padding: .45rem 1.1rem;
+      border-radius: 5px;
+      transition: background .15s;
+    }
+    .nav-cta:hover { background: var(--teal-dim); color: #fff; }
+
+    /* ── Hero ─────────────────────────────────────────────────────── */
+    .hero {
+      text-align: center;
+      padding: 72px 2rem 56px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 50px);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -.02em;
+      text-wrap: balance;
+      color: #f0f7fa;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero p {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 540px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .hero-stat {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      margin-top: 2rem;
+      font-size: 13px;
+      color: var(--muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: .6rem 1.1rem;
+    }
+    .hero-stat strong { color: var(--text); }
+
+    /* ── Plans ────────────────────────────────────────────────────── */
+    .plans-section {
+      padding: 0 1.5rem 80px;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.06fr 1fr;
+      gap: 1.25rem;
+      align-items: start;
+    }
+
+    .plan-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 2rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .plan-card.featured {
+      border-color: var(--teal);
+      border-left-width: 3px;
+      padding: 2.25rem 1.75rem;
+      background: linear-gradient(160deg, #132430 0%, #0f2030 100%);
+    }
+
+    .plan-badge {
+      display: inline-block;
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      background: var(--amber);
+      color: #1a1000;
+      padding: .25rem .7rem;
+      border-radius: 4px;
+      margin-bottom: 1.25rem;
+      align-self: flex-start;
+    }
+
+    .plan-label {
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: .6rem;
+    }
+
+    .plan-name {
+      font-size: 22px;
+      font-weight: 700;
+      color: #f0f7fa;
+      margin-bottom: .35rem;
+    }
+
+    .plan-desc {
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-bottom: 1.75rem;
+      min-height: 52px;
+    }
+
+    .plan-price {
+      margin-bottom: 1.75rem;
+    }
+
+    .plan-price .amount {
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      color: #f0f7fa;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .plan-price .period {
+      font-size: 13px;
+      color: var(--muted);
+      margin-left: .3rem;
+    }
+
+    .plan-price .note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: .3rem;
+    }
+
+    .plan-divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 1.5rem;
+    }
+
+    .plan-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+      margin-bottom: 2rem;
+      flex: 1;
+    }
+
+    .plan-features li {
+      font-size: 13.5px;
+      color: var(--muted);
+      display: flex;
+      align-items: flex-start;
+      gap: .6rem;
+      line-height: 1.45;
+    }
+
+    .plan-features li .icon {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      margin-top: 1px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+    }
+
+    .icon-check { background: rgba(45,155,138,.18); color: var(--teal); }
+    .icon-x     { background: rgba(91,142,160,.10); color: #2e4a5c; }
+
+    .plan-features li.included { color: var(--text); }
+    .plan-features li.excluded { color: #2e4a5c; }
+
+    .plan-cta {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: .85rem 1.5rem;
+      border-radius: 7px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: background .15s, transform .1s;
+      text-decoration: none;
+    }
+
+    .plan-cta:active { transform: scale(.98); }
+
+    .plan-cta.primary {
+      background: var(--teal);
+      color: #fff;
+    }
+    .plan-cta.primary:hover { background: var(--teal-dim); color: #fff; }
+
+    .plan-cta.secondary {
+      background: var(--raised);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .plan-cta.secondary:hover { background: #1e3545; color: var(--text); }
+
+    .plan-cta.outline {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+    .plan-cta.outline:hover { border-color: var(--muted); color: var(--text); }
+
+    /* ── Value stack ──────────────────────────────────────────────── */
+    .value-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 72px 2rem;
+    }
+
+    .value-inner {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .value-inner .eyebrow { margin-bottom: 1rem; }
+
+    .value-inner h2 {
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      color: #f0f7fa;
+      margin-bottom: .75rem;
+      text-wrap: balance;
+    }
+
+    .value-inner > p {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      max-width: 560px;
+    }
+
+    .value-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .value-table th {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: left;
+      padding: .6rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .value-table th:last-child { text-align: right; }
+
+    .value-table td {
+      padding: 1rem 0;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(30,61,82,.5);
+      vertical-align: top;
+    }
+
+    .value-table td:first-child {
+      color: var(--muted);
+      padding-right: 2rem;
+      width: 42%;
+    }
+
+    .value-table td:nth-child(2) {
+      color: var(--text);
+    }
+
+    .value-table td:last-child {
+      text-align: right;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .value-table tr.total-row td {
+      border-bottom: none;
+      padding-top: 1.25rem;
+    }
+
+    .value-table tr.total-row td:first-child {
+      font-weight: 700;
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .value-table tr.total-row td:last-child {
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .value-table tr.druker-row td {
+      padding-top: 1.5rem;
+      border-bottom: none;
+    }
+
+    .value-table tr.druker-row td:first-child {
+      font-weight: 700;
+      color: var(--teal);
+      font-size: 15px;
+    }
+
+    .value-table tr.druker-row td:last-child {
+      color: var(--teal);
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .value-note {
+      margin-top: 1.5rem;
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+
+    /* ── Guarantee ────────────────────────────────────────────────── */
+    .guarantee-section {
+      padding: 72px 2rem;
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .guarantee-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--teal-faint);
+      border: 1px solid rgba(45,155,138,.25);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 20px;
+    }
+
+    .guarantee-section h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #f0f7fa;
+      margin-bottom: .75rem;
+      letter-spacing: -.01em;
+    }
+
+    .guarantee-section p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── FAQ ──────────────────────────────────────────────────────── */
+    .faq-section {
+      padding: 0 2rem 80px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .faq-section h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #f0f7fa;
+      margin-bottom: 1.5rem;
+      letter-spacing: -.01em;
+    }
+
+    .faq-item {
+      border-top: 1px solid var(--border);
+    }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      color: var(--text);
+      font-size: 14.5px;
+      font-weight: 500;
+      padding: 1.2rem 0;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      font-family: var(--font);
+      line-height: 1.45;
+    }
+
+    .faq-question:hover { color: #fff; }
+
+    .faq-chevron {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      color: var(--muted);
+      transition: transform .2s;
+    }
+
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+
+    .faq-answer {
+      display: none;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      padding-bottom: 1.25rem;
+      max-width: 560px;
+    }
+
+    .faq-item.open .faq-answer { display: block; }
+
+    /* ── Final CTA ────────────────────────────────────────────────── */
+    .final-cta {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 72px 2rem;
+    }
+
+    .final-cta h2 {
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 700;
+      color: #f0f7fa;
+      letter-spacing: -.02em;
+      margin-bottom: .75rem;
+      text-wrap: balance;
+    }
+
+    .final-cta p {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: .9rem 2rem;
+      border-radius: 7px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background .15s;
+    }
+
+    .cta-btn.primary {
+      background: var(--teal);
+      color: #fff;
+    }
+    .cta-btn.primary:hover { background: var(--teal-dim); color: #fff; }
+
+    .cta-btn.secondary {
+      background: var(--raised);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .cta-btn.secondary:hover { background: #1e3545; color: var(--text); }
+
+    /* ── Footer ───────────────────────────────────────────────────── */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+
+    .footer a { color: var(--muted); }
+    .footer a:hover { color: var(--text); }
+
+    /* ── Responsive ───────────────────────────────────────────────── */
+    @media (max-width: 860px) {
+      .plans-grid {
+        grid-template-columns: 1fr;
+        max-width: 440px;
+        margin: 0 auto;
+      }
+
+      .plan-card.featured {
+        order: -1;
+      }
+
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <a href="/" class="nav-logo">DRUKER <span>IA</span></a>
+    <div class="nav-links">
+      <a href="/">Inicio</a>
+      <a href="/demo">Demo</a>
+      <a href="/precios" class="active">Precios</a>
+    </div>
+    <a href="/inicio" class="nav-cta">Iniciar sesión</a>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="eyebrow">Planes y precios</div>
+    <h1>Tu asesor decisional, sin costo de consultor</h1>
+    <p>Un consultor estratégico en Colombia cobra entre $500.000 y $2.000.000 COP por hora. Druker trabaja contigo todos los días, recuerda cada sesión y mejora con el tiempo.</p>
+    <div class="hero-stat">
+      Todos los planes incluyen&nbsp;<strong>30 días de prueba gratuita</strong>
+    </div>
+  </header>
+
+  <!-- Plans -->
+  <section class="plans-section">
+    <div class="plans-grid">
+
+      <!-- Lite -->
+      <div class="plan-card">
+        <div class="plan-label">Para empezar</div>
+        <div class="plan-name">Lite</div>
+        <div class="plan-desc">Para gerentes que quieren conocer Druker antes de comprometerse.</div>
+
+        <div class="plan-price">
+          <div class="amount">$129.000</div>
+          <span class="period">COP / mes</span>
+          <div class="note">aprox. USD $32</div>
+        </div>
+
+        <div class="plan-divider"></div>
+
+        <ul class="plan-features">
+          <li class="included">
+            <span class="icon icon-check">✓</span>
+            3 análisis por mes
+          </li>
+          <li class="included">
+            <span class="icon icon-check">✓</span>
+            Modo Rápido — decisiones en minutos
+          </li>
+          <li class="included">
+            <span class="icon icon-check">✓</span>
+            Acceso web completo
+          </li>
+          <li class="excluded">
+            <span class="icon icon-x">–</span>
+            Historial entre sesiones
+          </li>
+          <li class="excluded">
+            <span class="icon icon-x">–</span>
+            ICRE acumulado
+          </li>
+          <li class="excluded">
+            <span class="icon icon-x">–</span>
+            Registro de decisiones activas
+          </li>
+        </ul>
+
+        <a href="/inicio?plan=lite" class="plan-cta secondary">Empezar con Lite</a>
+      </div>
+
+      <!-- Full -->
+      <div class="plan-card featured">
+        <div class="plan-badge">Recomendado</div>
+        <div class="plan-label">Para operar bien</div>
+        <div class="plan-name">Full</div>
+        <div class="plan-desc">Para el gerente que quiere que Druker lo conozca, lo recuerde y mejore con él.</div>
+
+        <div class="plan-price">
+          <div class="amount">$379.000</div>
+          <span class="period">COP / mes</span>
+          <div class="note">aprox. USD $94</div>
+        </div>
+
+        <div class="plan-divider"></div>
+
+        <ul class="plan-features">
+          <li class="included">
+            <span class="icon icon-check">✓</span>
+            Análisis ilimitados
+          </li>
+          <li class="included">
+            <span class="icon icon-check">✓</span>
+            Historial completo de sesiones
+          </li>
+          <li class="included">
+            <span class="icon icon-check">✓</span>
+            ICRE — Índice de Confiabilidad Decisional con evolución en el tiempo
+          </li>
+          <li class="included">
+            <span class="icon icon-check">✓</span>
+            Registro de decisiones activas
+          </li>
+          <li class="included">
+            <span class="icon icon-check">✓</span>
+            Indicadores financieros con alertas
+          </li>
+          <li class="included">
+            <span class="icon icon-check">✓</span>
+            Análisis de documentos e imágenes
+          </li>
+          <li class="included">
+            <span class="icon icon-check">✓</span>
+            Búsqueda web en tiempo real
+          </li>
+        </ul>
+
+        <a href="/inicio?plan=full" class="plan-cta primary">Activar Plan Full</a>
+      </div>
+
+      <!-- Directivo -->
+      <div class="plan-card">
+        <div class="plan-label">Para equipos</div>
+        <div class="plan-name">Directivo</div>
+        <div class="plan-desc">Para empresas donde más de un gerente toma decisiones que impactan el negocio.</div>
+
+        <div class="plan-price">
+          <div class="amount">$890.000</div>
+          <span class="period">COP / mes</span>
+          <div class="note">hasta 5 usuarios</div>
+        </div>
+
+        <div class="plan-divider"></div>
+
+        <ul class="plan-features">
+          <li class="included">
+            <span class="icon icon-check">✓</span>
+            Todo lo del Plan Full
+          </li>
+          <li class="included">
+            <span class="icon icon-check">✓</span>
+            Hasta 5 usuarios por empresa
+          </li>
+          <li class="included">
+            <span class="icon icon-check">✓</span>
+            Cada usuario con su perfil y ICRE independiente
+          </li>
+          <li class="included">
+            <span class="icon icon-check">✓</span>
+            Soporte prioritario
+          </li>
+          <li class="included">
+            <span class="icon icon-check">✓</span>
+            Onboarding asistido para el equipo
+          </li>
+        </ul>
+
+        <a href="mailto:contacto@jvstratica.com?subject=Plan%20Directivo" class="plan-cta outline">Contactar</a>
+      </div>
+
+    </div><!-- .plans-grid -->
+  </section>
+
+  <!-- Value Stack -->
+  <section class="value-section">
+    <div class="value-inner">
+      <div class="eyebrow">Stack de valor</div>
+      <h2>Lo que Druker Full reemplaza en tu operación</h2>
+      <p>No es una comparación de características. Es lo que dejarías de contratar por separado.</p>
+
+      <div style="overflow-x: auto;">
+        <table class="value-table">
+          <thead>
+            <tr>
+              <th>Lo que hace</th>
+              <th>Equivalente tradicional</th>
+              <th>Costo estimado/mes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Análisis de decisiones estratégicas</td>
+              <td>Consultor externo (4 horas/mes)</td>
+              <td>$2.000.000+</td>
+            </tr>
+            <tr>
+              <td>Diagnóstico financiero con alertas</td>
+              <td>CFO part-time o software BI</td>
+              <td>$800.000+</td>
+            </tr>
+            <tr>
+              <td>Detección de sesgos cognitivos</td>
+              <td>Coach ejecutivo</td>
+              <td>$600.000+</td>
+            </tr>
+            <tr>
+              <td>Registro y seguimiento de decisiones</td>
+              <td>Software de gestión estratégica</td>
+              <td>$200.000+</td>
+            </tr>
+            <tr class="total-row">
+              <td>Total equivalente</td>
+              <td></td>
+              <td>$3.600.000+</td>
+            </tr>
+            <tr class="druker-row">
+              <td>Druker IA — Plan Full</td>
+              <td></td>
+              <td>$379.000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="value-note">Estimados basados en tarifas de mercado en Colombia. La comparación no es un reclamo de equivalencia funcional — es una referencia del costo alternativo de cubrir estas necesidades por separado.</p>
+    </div>
+  </section>
+
+  <!-- Guarantee -->
+  <section class="guarantee-section">
+    <div class="guarantee-icon">◎</div>
+    <h2>Sin contratos. Sin riesgo.</h2>
+    <p>Cancela en cualquier momento desde tu panel de usuario. No hay compromisos mínimos ni penalizaciones. El acceso se mantiene activo hasta el fin del período pagado.</p>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <h2>Preguntas frecuentes</h2>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        ¿Qué pasa cuando termino mis 3 análisis del Plan Lite?
+        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="faq-answer">Druker te avisará cuando estés usando tu último análisis del mes. Una vez agotados, la sesión queda en modo lectura hasta el siguiente ciclo o hasta que actualices a Plan Full. Ninguna conversación se pierde.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        ¿Qué es el ICRE y por qué solo está en Full?
+        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="faq-answer">El ICRE (Índice de Confiabilidad en la Toma de Decisiones) es un diagnóstico de 100 puntos que mide la calidad de tu proceso decisional en 7 dimensiones: salud financiera, calidad decisional, disciplina de ejecución, resultado de decisiones, riesgo estructural, calidad de datos y adaptabilidad. Para calcularlo con precisión y seguir su evolución, Druker necesita recordar tus sesiones anteriores — algo que requiere el historial activo del Plan Full.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        ¿Cómo funciona el período de prueba de 30 días?
+        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="faq-answer">Al registrarte accedes a 30 días con las funcionalidades del Plan Full sin costo. No necesitas tarjeta de crédito para empezar. Al finalizar el período, puedes elegir un plan o simplemente dejar de usar Druker — sin cobros automáticos.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        ¿Puedo actualizar de Lite a Full en cualquier momento?
+        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="faq-answer">Sí. El cambio de plan aplica de inmediato desde tu panel de usuario. El historial que hayas generado en Lite se mantiene disponible en cuanto activas Full.</div>
+    </div>
+
+  </section>
+
+  <!-- Final CTA -->
+  <section class="final-cta">
+    <h2>Empieza hoy con 30 días gratis</h2>
+    <p>Sin tarjeta de crédito. Sin configuración compleja. Druker está listo en 5 minutos.</p>
+    <div class="cta-group">
+      <a href="/inicio" class="cta-btn primary">Crear cuenta gratis</a>
+      <a href="/demo" class="cta-btn secondary">Ver demo primero</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2026 JVstratica SAS · <a href="mailto:contacto@jvstratica.com">contacto@jvstratica.com</a> · <a href="/privacidad">Privacidad</a></p>
+  </footer>
+
+  <script>
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+  </script>
+
+</body>
+</html>

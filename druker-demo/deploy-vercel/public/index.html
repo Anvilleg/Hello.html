@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DRUKER IA — Una mala decisión cuesta más que 12 meses de Druker</title>
+<meta name="description" content="Druker estructura en 10 minutos lo que llevas días dándole vueltas en la cabeza — y te da una recomendación que puedes defender. Asesor decisional con IA para gerentes PyME. 30 días gratis.">
+<meta name="keywords" content="asesor decisional IA, consultor inteligencia artificial, DRUKER IA, asistente gerencial, toma de decisiones empresariales, IA para gerentes, Operat-IA, Colombia, pymes">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://operatia.co/">
+
+<!-- Open Graph -->
+<meta property="og:type"        content="website">
+<meta property="og:url"         content="https://operatia.co/">
+<meta property="og:site_name"   content="Operat-IA">
+<meta property="og:title"       content="DRUKER IA — Una mala decisión cuesta más que 12 meses de Druker">
+<meta property="og:description" content="Druker estructura en 10 minutos lo que llevas días dándole vueltas en la cabeza — y te da una recomendación que puedes defender. 30 días gratis.">
+<meta property="og:image"       content="https://operatia.co/og-image.png">
+<meta property="og:locale"      content="es_CO">
+
+<!-- Twitter Card -->
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="DRUKER IA — Tu asesor decisional con IA">
+<meta name="twitter:description" content="Analiza tus decisiones, mide tu DRUKER Score y opera con claridad estratégica. 30 días gratis.">
+<meta name="twitter:image"       content="https://operatia.co/og-image.png">
+
+<!-- JSON-LD: Organización + Software -->
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Operat-IA",
+    "url": "https://operatia.co",
+    "logo": "https://operatia.co/og-image.png",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "drukeria@operatia.co",
+      "contactType": "customer support",
+      "availableLanguage": "Spanish"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "DRUKER IA",
+    "description": "Asesor decisional con inteligencia artificial para gerentes y directivos de pymes.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "url": "https://operatia.co",
+    "offers": {
+      "@type": "Offer",
+      "price": "100",
+      "priceCurrency": "USD",
+      "description": "Plan mensual — 30 días gratis",
+      "url": "https://operatia.co/precios"
+    },
+    "provider": {
+      "@type": "Organization",
+      "name": "Operat-IA",
+      "url": "https://operatia.co"
+    }
+  }
+]
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:  #0F1E35;
+  --blue:  #1D4ED8;
+  --blue2: #3B82F6;
+  --sky:   #EFF6FF;
+  --text:  #0F172A;
+  --muted: #64748B;
+  --border:#E2E8F0;
+  --white: #FFFFFF;
+  --bg:    #F8FAFC;
+  --green: #10B981;
+  --amber: #F59E0B;
+  --teal:  #2d9b8a;
+  --teal2: #3aafa9;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--white); }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(15,30,53,.97);
+  backdrop-filter: blur(12px);
+  padding: .875rem 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.nav-logo { color: #fff; font-size: 1.1rem; font-weight: 800; letter-spacing: -.02em; text-decoration: none; }
+.nav-logo span { color: var(--blue2); }
+.nav-links { display: flex; align-items: center; gap: 2rem; }
+.nav-links a { color: rgba(255,255,255,.7); text-decoration: none; font-size: .875rem; font-weight: 500; transition: color .2s; }
+.nav-links a:hover { color: #fff; }
+/* ── CAMBIO 1: estilo especial para el link de demo en nav ── */
+.nav-links .nav-demo {
+  color: var(--teal2) !important;
+  font-weight: 600 !important;
+  border: 1px solid rgba(45,155,138,.35);
+  padding: .35rem .875rem;
+  border-radius: 6px;
+  transition: background .15s, color .15s !important;
+}
+.nav-links .nav-demo:hover {
+  background: rgba(45,155,138,.12);
+  color: #fff !important;
+}
+.nav-cta {
+  background: var(--blue); color: #fff !important;
+  padding: .55rem 1.25rem; border-radius: 8px; font-weight: 600 !important;
+  transition: background .2s !important;
+}
+.nav-cta:hover { background: #1540b8 !important; }
+
+/* ─── HERO ─── */
+.hero {
+  background: linear-gradient(160deg, #0F1E35 0%, #162845 55%, #1a3060 100%);
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding: 7rem 2rem 5rem;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 70% 40%, rgba(29,78,216,.18), transparent);
+  pointer-events: none;
+}
+.hero-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: rgba(59,130,246,.15); border: 1px solid rgba(59,130,246,.3);
+  color: var(--blue2); font-size: .75rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: .375rem 1rem; border-radius: 100px; margin-bottom: 1.5rem;
+}
+.hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue2); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+.hero h1 {
+  font-size: 3.25rem; font-weight: 900; line-height: 1.1;
+  color: #fff; letter-spacing: -.03em; margin-bottom: 1.25rem;
+}
+.hero h1 em { font-style: normal; color: var(--blue2); }
+.hero > .hero-inner > div > p {
+  font-size: 1.05rem; color: rgba(255,255,255,.65); line-height: 1.75;
+  margin-bottom: 2rem; max-width: 480px;
+}
+.hero-insight {
+  display: flex; align-items: flex-start; gap: .75rem;
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+  border-radius: 12px; padding: .875rem 1.1rem; margin-bottom: 2rem; max-width: 480px;
+}
+.hero-insight-ico { font-size: 1.2rem; flex-shrink: 0; margin-top: .05rem; }
+.hero-insight p { font-size: .82rem; color: rgba(255,255,255,.6); line-height: 1.55; font-style: italic; }
+.hero-insight p strong { color: rgba(255,255,255,.9); font-style: normal; }
+.hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.btn-hero {
+  background: var(--blue); color: #fff;
+  padding: .95rem 2rem; border-radius: 12px;
+  font-size: 1rem; font-weight: 700; text-decoration: none;
+  transition: all .2s; display: inline-block;
+  box-shadow: 0 4px 20px rgba(29,78,216,.4);
+}
+.btn-hero:hover { background: #1540b8; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(29,78,216,.5); }
+.btn-ghost-hero {
+  color: rgba(255,255,255,.7); font-size: .9rem; font-weight: 500;
+  text-decoration: none; display: flex; align-items: center; gap: .5rem;
+  transition: color .2s;
+}
+.btn-ghost-hero:hover { color: #fff; }
+/* ── CAMBIO 2: botón de demo en hero ── */
+.btn-demo-hero {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .9rem 1.75rem; border-radius: 12px;
+  border: 1.5px solid rgba(45,155,138,.5);
+  background: rgba(45,155,138,.1);
+  color: var(--teal2); font-size: .95rem; font-weight: 600;
+  text-decoration: none; transition: all .2s;
+}
+.btn-demo-hero:hover {
+  background: rgba(45,155,138,.2);
+  border-color: var(--teal2);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* Hero visual / mock card */
+.hero-visual { position: relative; }
+.mock-card {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 20px; padding: 1.75rem;
+  backdrop-filter: blur(8px);
+}
+.mock-hdr {
+  display: flex; align-items: center; gap: .875rem; margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem; border-bottom: 1px solid rgba(255,255,255,.1);
+}
+.mock-avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: linear-gradient(135deg,#1D4ED8,#7C3AED);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; font-weight: 800; color: #fff;
+}
+.mock-name { color: #fff; font-weight: 700; font-size: .95rem; }
+.mock-sub  { color: rgba(255,255,255,.45); font-size: .75rem; }
+.mock-tag  {
+  margin-left: auto; background: rgba(16,185,129,.15);
+  color: #34D399; font-size: .7rem; font-weight: 700;
+  padding: .25rem .625rem; border-radius: 6px; border: 1px solid rgba(16,185,129,.25);
+}
+.mock-archetype {
+  background: linear-gradient(135deg,#1D4ED8,#0F1E35);
+  border-radius: 14px; padding: 1.25rem; margin-bottom: 1rem;
+  text-align: center;
+}
+.mock-archetype .ma-lbl { font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.5); margin-bottom: .3rem; }
+.mock-archetype .ma-name { font-size: 1.2rem; font-weight: 800; color: #fff; margin-bottom: .25rem; }
+.mock-archetype .ma-quote { font-size: .78rem; color: rgba(255,255,255,.6); font-style: italic; }
+
+/* DRUKER Score mini widget */
+.mock-score {
+  background: rgba(255,255,255,.05); border-radius: 14px; padding: 1.1rem;
+  margin-bottom: .75rem;
+}
+.ms-score-row { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: .5rem; }
+.ms-score-lbl { font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.45); }
+.ms-score-num { font-size: 2.1rem; font-weight: 900; color: #fff; line-height: 1; }
+.ms-score-max { font-size: .75rem; color: rgba(255,255,255,.3); }
+.ms-bar-track { background: rgba(255,255,255,.1); border-radius: 100px; height: 7px; overflow: hidden; margin-bottom: .45rem; }
+.ms-bar-fill  { height: 100%; border-radius: 100px; background: linear-gradient(90deg,#3B82F6,#10B981); width: 72%; }
+.ms-nivel { font-size: .72rem; font-weight: 700; color: #F59E0B; }
+.ms-comps { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .4rem; }
+.ms-comp { background: rgba(255,255,255,.04); border-radius: 8px; padding: .45rem .5rem; }
+.ms-comp-lbl { font-size: .58rem; color: rgba(255,255,255,.35); margin-bottom: .2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ms-comp-bar { background: rgba(255,255,255,.08); border-radius: 100px; height: 4px; overflow: hidden; }
+.ms-comp-fill { height: 100%; border-radius: 100px; background: var(--blue2); }
+.mock-decision {
+  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+  border-radius: 10px; padding: .75rem .875rem;
+  display: flex; align-items: center; gap: .625rem;
+}
+.md-ico { font-size: .95rem; }
+.md-text { font-size: .75rem; color: rgba(255,255,255,.55); line-height: 1.4; }
+.md-text strong { color: rgba(255,255,255,.85); font-weight: 600; }
+
+/* ─── TRUST / EVIDENCIA ─── */
+.trust-bar {
+  background: var(--navy); border-top: 1px solid rgba(255,255,255,.07);
+  padding: 1.75rem 2rem;
+}
+.trust-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+.trust-item { display: flex; align-items: center; gap: .625rem; }
+.trust-item-ico { font-size: 1.1rem; }
+.trust-item-txt { font-size: .82rem; color: rgba(255,255,255,.55); font-weight: 500; }
+.trust-item-txt strong { color: rgba(255,255,255,.85); }
+.trust-divider { width: 1px; height: 28px; background: rgba(255,255,255,.1); flex-shrink: 0; }
+
+/* ─── TRES PROMESAS ─── */
+.promises-bar {
+  background: var(--white); border-top: 3px solid var(--blue); border-bottom: 1px solid var(--border);
+  padding: 2.5rem 2rem;
+}
+.promises-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+.promise-card { display: flex; flex-direction: column; align-items: center; text-align: center; gap: .5rem; padding: 1.5rem 1rem; border-radius: 16px; background: var(--sky); }
+.promise-ico { font-size: 2rem; }
+.promise-metric { font-size: 1.5rem; font-weight: 900; color: var(--navy); letter-spacing: -.02em; }
+.promise-label { font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--blue); }
+.promise-desc { font-size: .875rem; color: var(--muted); line-height: 1.55; }
+@media(max-width:700px){ .promises-inner { grid-template-columns:1fr; } }
+
+/* ─── CASO ESTRELLA ─── */
+.caso-section { background: var(--navy); padding: 4rem 2rem; }
+.caso-inner { max-width: 900px; margin: 0 auto; }
+.caso-eyebrow { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--blue2); margin-bottom: 1rem; text-align: center; }
+.caso-ttl { font-size: 1.75rem; font-weight: 800; color: #fff; text-align: center; margin-bottom: .5rem; line-height: 1.3; }
+.caso-sub { font-size: .95rem; color: rgba(255,255,255,.6); text-align: center; margin-bottom: 2rem; }
+.caso-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.caso-step { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 14px; padding: 1.25rem 1.5rem; }
+.caso-step-num { font-size: .72rem; font-weight: 700; color: var(--blue2); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .375rem; }
+.caso-step h4 { font-size: .95rem; font-weight: 700; color: #fff; margin-bottom: .25rem; }
+.caso-step p { font-size: .825rem; color: rgba(255,255,255,.55); line-height: 1.55; }
+.caso-result { margin-top: 1.25rem; background: rgba(29,78,216,.25); border: 1px solid rgba(59,130,246,.3); border-radius: 14px; padding: 1.25rem 1.5rem; display: flex; align-items: flex-start; gap: 1rem; }
+.caso-result-ico { font-size: 1.5rem; flex-shrink: 0; }
+.caso-result p { font-size: .9rem; color: rgba(255,255,255,.85); line-height: 1.6; }
+.caso-result strong { color: #fff; }
+@media(max-width:650px){ .caso-grid { grid-template-columns:1fr; } }
+
+/* ─── DOLOR VALIDADO ─── */
+.dolor-section {
+  background: var(--bg); padding: 5rem 2rem;
+  border-bottom: 1px solid var(--border);
+}
+.dolor-inner { max-width: 1100px; margin: 0 auto; }
+.dolor-eyebrow { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--blue); margin-bottom: .625rem; text-align: center; }
+.dolor-ttl { font-size: 2rem; font-weight: 800; color: var(--navy); line-height: 1.2; letter-spacing: -.02em; text-align: center; margin-bottom: .75rem; }
+.dolor-sub { font-size: .95rem; color: var(--muted); text-align: center; margin-bottom: 2.75rem; line-height: 1.65; }
+.dolor-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+.dolor-card {
+  background: var(--white); border-radius: 16px; padding: 1.625rem;
+  border: 1.5px solid var(--border); position: relative;
+}
+.dolor-card::before {
+  content: '"'; position: absolute; top: .875rem; left: 1.1rem;
+  font-size: 3.5rem; color: var(--blue); opacity: .12; font-family: Georgia, serif; line-height: 1;
+}
+.dolor-quote { font-size: .9rem; color: var(--text); line-height: 1.65; font-style: italic; margin-bottom: 1rem; padding-top: .75rem; }
+.dolor-author { font-size: .75rem; color: var(--muted); font-weight: 600; display: flex; align-items: center; gap: .5rem; }
+.dolor-author::before { content: '—'; }
+.dolor-resp {
+  margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);
+  font-size: .78rem; color: var(--blue); font-weight: 600;
+  display: flex; align-items: center; gap: .375rem;
+}
+.dolor-resp::before { content: '✦'; font-size: .65rem; }
+
+/* ─── SECTIONS ─── */
+.section { padding: 5.5rem 2rem; }
+.section-inner { max-width: 1100px; margin: 0 auto; }
+.section-alt { background: var(--bg); }
+
+.section-tag  { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--blue); margin-bottom: .625rem; text-align: center; }
+.section-ttl  { font-size: 2.4rem; font-weight: 800; color: var(--navy); line-height: 1.2; letter-spacing: -.02em; text-align: center; margin-bottom: 1rem; }
+.section-sub  { font-size: 1.05rem; color: var(--muted); text-align: center; line-height: 1.7; max-width: 560px; margin: 0 auto 3.5rem; }
+
+/* ─── HOW IT WORKS ─── */
+.steps { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; }
+.step-card {
+  background: var(--white); border-radius: 18px; padding: 2rem;
+  border: 1.5px solid var(--border);
+  position: relative; transition: all .25s;
+}
+.step-card:hover { border-color: var(--blue); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(29,78,216,.1); }
+.step-num {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: var(--sky); color: var(--blue);
+  font-size: 1rem; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.25rem;
+}
+.step-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: .625rem; }
+.step-card p  { font-size: .9rem; color: var(--muted); line-height: 1.65; }
+
+/* ─── COMPARATIVA ─── */
+.comp-section { padding: 5.5rem 2rem; background: var(--white); }
+.comp-inner { max-width: 1100px; margin: 0 auto; }
+
+/* ─── MINI DEMO ─── */
+.demo-question {
+  background: var(--navy); border-radius: 14px; padding: 1rem 1.5rem;
+  margin: 2rem 0 1.5rem; display: flex; align-items: center; gap: 1rem;
+}
+.demo-question-label { font-size: .7rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: rgba(255,255,255,.45); white-space: nowrap; }
+.demo-question-text { font-size: 1rem; font-weight: 700; color: #fff; }
+
+.demo-scenarios { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.demo-scenario-btn {
+  padding: .45rem 1rem; border-radius: 100px; font-size: .8rem; font-weight: 600;
+  cursor: pointer; border: 1.5px solid var(--border); background: var(--white);
+  color: var(--muted); font-family: inherit; transition: all .2s; white-space: nowrap;
+}
+.demo-scenario-btn:hover { border-color: var(--blue); color: var(--blue); }
+.demo-scenario-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+
+.demo-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; align-items: start;
+}
+.demo-col { border-radius: 16px; overflow: hidden; border: 1.5px solid var(--border); }
+.demo-col-header {
+  padding: .875rem 1.25rem; display: flex; align-items: center; gap: .625rem;
+  border-bottom: 1.5px solid var(--border);
+}
+.demo-col-icon { font-size: 1.1rem; }
+.demo-col-name { font-size: .82rem; font-weight: 700; color: var(--text); }
+.demo-col-tag  { font-size: .65rem; font-weight: 700; padding: .15rem .5rem;
+  border-radius: 100px; margin-left: auto; }
+.demo-col.col-gpt    { }
+.demo-col.col-claude { }
+.demo-col.col-druker { border-color: var(--blue); border-width: 2px; }
+.demo-col.col-druker .demo-col-header { background: var(--sky); border-color: #93C5FD; }
+.demo-col.col-druker .demo-col-name { color: var(--blue); }
+.tag-generic { background: #F1F5F9; color: #64748B; }
+.tag-druker  { background: #DBEAFE; color: #1E40AF; }
+
+.demo-col-body { padding: 1.25rem; font-size: .85rem; line-height: 1.65; color: var(--text);
+  min-height: 220px; background: #fff; }
+.demo-col-body p { margin-bottom: .75rem; }
+.demo-col-body p:last-child { margin-bottom: 0; }
+.demo-col-body ul { padding-left: 1.25rem; margin-bottom: .75rem; }
+.demo-col-body li { margin-bottom: .25rem; }
+.demo-col-body strong { color: var(--navy); }
+.demo-col.col-druker .demo-col-body { background: var(--sky); }
+
+/* ── CAMBIO 3: bloque CTA del demo ── */
+.demo-cta-block {
+  margin-top: 2rem;
+  background: linear-gradient(135deg, #0a1219 0%, #0f2030 100%);
+  border: 1px solid rgba(45,155,138,.3);
+  border-radius: 16px;
+  padding: 1.75rem 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1.5rem; flex-wrap: wrap;
+}
+.demo-cta-copy { flex: 1; min-width: 220px; }
+.demo-cta-eyebrow { font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--teal2); margin-bottom: .375rem; }
+.demo-cta-title { font-size: 1.05rem; font-weight: 700; color: #fff; line-height: 1.4; }
+.demo-cta-sub { font-size: .82rem; color: rgba(255,255,255,.45); margin-top: .25rem; }
+.btn-demo-cta {
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .95rem 1.75rem; background: var(--teal); color: #fff;
+  border: none; border-radius: 10px; font-family: 'Inter', sans-serif;
+  font-size: .95rem; font-weight: 700; cursor: pointer;
+  text-decoration: none; transition: background .15s, transform .15s;
+  white-space: nowrap;
+}
+.btn-demo-cta:hover { background: var(--teal2); transform: translateY(-2px); }
+
+.comp-note { margin-top: 1.25rem; font-size: .82rem; color: var(--muted); text-align: center; line-height: 1.6; }
+.comp-note strong { color: var(--text); }
+
+@media(max-width:800px) {
+  .demo-grid { grid-template-columns: 1fr; }
+  .demo-col.col-gpt, .demo-col.col-claude { display: none; }
+  .demo-col.col-druker { display: block; }
+  .demo-grid::before {
+    content: 'Mostrando solo la respuesta de Druker IA — ve el demo completo para comparar';
+    font-size: .75rem; color: var(--muted); text-align: center; padding: .5rem;
+    grid-column: 1; display: block;
+  }
+  .demo-cta-block { flex-direction: column; text-align: center; }
+}
+
+/* ─── DRUKER SCORE TEASER ─── */
+.score-teaser { padding: 5rem 2rem; background: var(--bg); }
+.score-teaser-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+.score-teaser-copy .st-eyebrow { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--blue); margin-bottom: .625rem; }
+.score-teaser-copy h2 { font-size: 2.2rem; font-weight: 800; color: var(--navy); line-height: 1.2; letter-spacing: -.02em; margin-bottom: 1rem; }
+.score-teaser-copy p { font-size: .95rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.25rem; }
+.score-teaser-copy ul { list-style: none; display: flex; flex-direction: column; gap: .625rem; }
+.score-teaser-copy ul li { font-size: .9rem; color: var(--text); display: flex; align-items: flex-start; gap: .625rem; line-height: 1.5; }
+.score-teaser-copy ul li::before { content: '✦'; color: var(--blue); font-size: .65rem; margin-top: .25rem; flex-shrink: 0; }
+.score-visual {
+  background: linear-gradient(135deg, #0F1E35 0%, #1D3461 100%);
+  border-radius: 20px; padding: 2rem;
+}
+.sv-label { font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: .25rem; }
+.sv-score { font-size: 3.5rem; font-weight: 900; color: #fff; line-height: 1; margin-bottom: .5rem; }
+.sv-score span { font-size: 1.25rem; color: rgba(255,255,255,.3); font-weight: 400; }
+.sv-nivel { font-size: .82rem; font-weight: 700; color: #F59E0B; margin-bottom: 1rem; }
+.sv-bar-track { background: rgba(255,255,255,.12); border-radius: 100px; height: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+.sv-bar-fill  { height: 100%; border-radius: 100px; background: linear-gradient(90deg,#3B82F6,#10B981); width: 72%; }
+.sv-comps { display: flex; flex-direction: column; gap: .625rem; margin-bottom: 1.25rem; }
+.sv-comp { display: flex; align-items: center; gap: .75rem; }
+.sv-comp-name { font-size: .75rem; color: rgba(255,255,255,.55); width: 130px; flex-shrink: 0; }
+.sv-comp-bar-track { flex: 1; background: rgba(255,255,255,.1); border-radius: 100px; height: 6px; overflow: hidden; }
+.sv-comp-bar-fill { height: 100%; border-radius: 100px; background: var(--blue2); }
+.sv-comp-pts { font-size: .7rem; color: rgba(255,255,255,.4); width: 32px; text-align: right; flex-shrink: 0; }
+.sv-msg { font-size: .78rem; color: rgba(255,255,255,.45); border-top: 1px solid rgba(255,255,255,.1); padding-top: .875rem; line-height: 1.55; font-style: italic; }
+
+/* ─── ARCHETYPES ─── */
+.arch-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; }
+.arch-card {
+  border-radius: 16px; padding: 1.5rem 1.25rem; text-align: center;
+  color: #fff; position: relative; overflow: hidden;
+  cursor: default; transition: transform .25s;
+}
+.arch-card:hover { transform: translateY(-5px); }
+.arch-card .ac-ico  { font-size: 1.75rem; margin-bottom: .75rem; }
+.arch-card .ac-name { font-size: .95rem; font-weight: 800; margin-bottom: .375rem; line-height: 1.25; }
+.arch-card .ac-quote{ font-size: .73rem; opacity: .75; font-style: italic; line-height: 1.4; }
+.ac1 { background: linear-gradient(145deg,#1D4ED8,#0F1E35); }
+.ac2 { background: linear-gradient(145deg,#DC2626,#0F1E35); }
+.ac3 { background: linear-gradient(145deg,#059669,#0F1E35); }
+.ac4 { background: linear-gradient(145deg,#7C3AED,#0F1E35); }
+.ac5 { background: linear-gradient(145deg,#D97706,#0F1E35); }
+
+/* ─── WHAT YOU GET ─── */
+.benefits { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+.benefit-card {
+  background: var(--white); border-radius: 16px; padding: 1.625rem;
+  border: 1.5px solid var(--border); display: flex; gap: 1rem; align-items: flex-start;
+  transition: all .2s;
+}
+.benefit-card:hover { border-color: var(--blue); box-shadow: 0 4px 20px rgba(29,78,216,.08); }
+.benefit-ico {
+  width: 44px; height: 44px; border-radius: 11px;
+  background: var(--sky); display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; flex-shrink: 0;
+}
+.benefit-card h4 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: .375rem; }
+.benefit-card p  { font-size: .875rem; color: var(--muted); line-height: 1.6; }
+
+/* ─── CTA SECTION ─── */
+.cta-section {
+  background: linear-gradient(135deg, #0F1E35 0%, #162845 100%);
+  padding: 6rem 2rem; text-align: center; position: relative; overflow: hidden;
+}
+.cta-section::before {
+  content: '';
+  position: absolute; top: -50%; left: 50%; transform: translateX(-50%);
+  width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(29,78,216,.2), transparent 70%);
+  pointer-events: none;
+}
+.cta-section h2 { font-size: 2.75rem; font-weight: 900; color: #fff; letter-spacing: -.02em; margin-bottom: 1rem; }
+.cta-section h2 em { font-style: normal; color: var(--blue2); }
+.cta-section p  { font-size: 1.05rem; color: rgba(255,255,255,.6); margin-bottom: 2.5rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+.cta-time { display: inline-flex; align-items: center; gap: .5rem; margin-top: 1.5rem; color: rgba(255,255,255,.4); font-size: .825rem; }
+.cta-time::before { content: '⏱'; }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--navy); padding: 2.5rem 2rem;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1rem;
+}
+footer .f-logo { color: #fff; font-weight: 800; font-size: 1rem; }
+footer .f-logo span { color: var(--blue2); }
+footer .f-copy { color: rgba(255,255,255,.35); font-size: .8rem; }
+footer .f-links { display: flex; gap: 1.5rem; }
+footer .f-links a { color: rgba(255,255,255,.4); font-size: .8rem; text-decoration: none; transition: color .2s; }
+footer .f-links a:hover { color: rgba(255,255,255,.8); }
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  .hero-inner         { grid-template-columns:1fr; }
+  .hero-visual        { display:none; }
+  .hero h1            { font-size:2.25rem; }
+  .steps              { grid-template-columns:1fr; }
+  .arch-grid          { grid-template-columns:1fr 1fr; }
+  .benefits           { grid-template-columns:1fr; }
+  .section-ttl        { font-size:1.85rem; }
+  .cta-section h2     { font-size:2rem; }
+  .dolor-grid         { grid-template-columns:1fr; }
+  .score-teaser-inner { grid-template-columns:1fr; }
+  .comp-table tbody td:nth-child(2) { display:none; }
+  .comp-table thead th:nth-child(2) { display:none; }
+}
+@media(max-width:600px){
+  nav { padding:.875rem 1.25rem; }
+  .nav-links { display:none; }
+  .hero { padding:6rem 1.25rem 4rem; }
+  .hero h1 { font-size:1.9rem; }
+  .section { padding:4rem 1.25rem; }
+  .arch-grid { grid-template-columns:1fr 1fr; }
+  footer { flex-direction:column; text-align:center; }
+  footer .f-links { justify-content:center; }
+  .trust-inner { flex-direction:column; gap:1rem; }
+  .trust-divider { display:none; }
+  .dolor-section { padding:4rem 1.25rem; }
+  .comp-section { padding:4rem 1.25rem; }
+  .score-teaser { padding:4rem 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══════════════════════════════════════════ -->
+<nav>
+  <a href="/" class="nav-logo">Operat<span>-IA</span></a>
+  <div class="nav-links">
+    <a href="#por-que-druker">Por qué DRUKER</a>
+    <a href="#como-funciona">Cómo funciona</a>
+    <a href="#arquetipos">Tu arquetipo</a>
+    <!-- ── CAMBIO 1: link visible al demo en la nav ── -->
+    <a href="/demo" class="nav-demo">Probar demo →</a>
+    <a href="/inicio">Mi perfil →</a>
+    <a href="/onboarding" class="nav-cta">Prueba 30 días gratis →</a>
+  </div>
+  <a href="/consultor" style="color:rgba(255,255,255,.5);font-size:.72rem;font-weight:500;text-decoration:none;margin-left:1.25rem;white-space:nowrap;letter-spacing:.03em" onmouseover="this.style.color='rgba(255,255,255,.85)'" onmouseout="this.style.color='rgba(255,255,255,.5)'">Consultores →</a>
+</nav>
+
+<!-- ══ HERO ══════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">DRUKER IA · Asesor decisional para gerentes PyME</div>
+      <h1>Una mala decisión cuesta más<br>que 12 meses de <em>DRUKER</em>.</h1>
+      <p>Druker estructura en 10 minutos lo que llevas días dándole vueltas en la cabeza — y te da una recomendación que puedes defender. Sin reuniones. Sin consultores. Con el contexto real de tu empresa.</p>
+      <div class="hero-insight">
+        <div class="hero-insight-ico">📌</div>
+        <p><strong>Caso real: "¿Acepto este nuevo cliente o proyecto?"</strong><br>Druker analiza capacidad de pago, riesgo de relación, margen y señales de alerta — en 5 minutos, antes de que el cliente te llame mañana.</p>
+      </div>
+      <!-- ── CAMBIO 2: demo como segunda opción en las hero-actions ── -->
+      <div class="hero-actions">
+        <a href="/onboarding" class="btn-hero">Empezar gratis — 30 días →</a>
+        <a href="/demo" class="btn-demo-hero">Ver demo sin registro →</a>
+      </div>
+      <div style="margin-top:.75rem">
+        <a href="/inicio" style="font-size:.78rem;color:rgba(255,255,255,.35);text-decoration:none;transition:color .2s" onmouseover="this.style.color='rgba(255,255,255,.6)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Ya tengo perfil → Entrar</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="mock-card">
+        <div class="mock-hdr">
+          <div class="mock-avatar">L</div>
+          <div>
+            <div class="mock-name">Laura Gómez</div>
+            <div class="mock-sub">Fundadora · Productora Ciento5 SAS</div>
+          </div>
+          <div class="mock-tag">Trial activo</div>
+        </div>
+        <div class="mock-archetype">
+          <div class="ma-lbl">Arquetipo gerencial</div>
+          <div class="ma-name">Gerente Pragmática</div>
+          <div class="ma-quote">"Prefiero resolver bien lo de hoy que planear lo que no voy a ejecutar"</div>
+        </div>
+
+        <!-- DRUKER Score mini -->
+        <div class="mock-score">
+          <div class="ms-score-row">
+            <div class="ms-score-lbl">DRUKER Score</div>
+            <div><span class="ms-score-num">72</span><span class="ms-score-max"> / 100</span></div>
+          </div>
+          <div class="ms-bar-track"><div class="ms-bar-fill"></div></div>
+          <div class="ms-nivel">🟡 Riesgo moderado · mejorando</div>
+          <div class="ms-comps" style="margin-top:.75rem">
+            <div class="ms-comp">
+              <div class="ms-comp-lbl">Salud financ.</div>
+              <div class="ms-comp-bar"><div class="ms-comp-fill" style="width:80%"></div></div>
+            </div>
+            <div class="ms-comp">
+              <div class="ms-comp-lbl">Cal. decisional</div>
+              <div class="ms-comp-bar"><div class="ms-comp-fill" style="width:65%"></div></div>
+            </div>
+            <div class="ms-comp">
+              <div class="ms-comp-lbl">Ejecución</div>
+              <div class="ms-comp-bar"><div class="ms-comp-fill" style="width:55%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- última decisión -->
+        <div class="mock-decision">
+          <div class="md-ico">📌</div>
+          <div class="md-text">
+            <strong>Decisión activa:</strong> Incorporar jefe de ventas regional · Riesgo: <span style="color:#F59E0B;font-weight:700">Medio</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TRES PROMESAS ════════════════════════════════ -->
+<div class="promises-bar">
+  <div class="promises-inner">
+    <div class="promise-card">
+      <div class="promise-ico">⏱</div>
+      <div class="promise-metric">10 min</div>
+      <div class="promise-label">Gana tiempo</div>
+      <div class="promise-desc">Lo que llevas días dándole vueltas en la cabeza, sin llegar a ninguna conclusión.</div>
+    </div>
+    <div class="promise-card">
+      <div class="promise-ico">🎯</div>
+      <div class="promise-metric">Claridad real</div>
+      <div class="promise-label">Tiene sentido</div>
+      <div class="promise-desc">Convierte ese nudo en el estómago en una recomendación que puedes defender.</div>
+    </div>
+    <div class="promise-card">
+      <div class="promise-ico">💰</div>
+      <div class="promise-metric">El costo evitado</div>
+      <div class="promise-label">Protege tu caja</div>
+      <div class="promise-desc">Una mala decisión cuesta más que 12 meses de Druker. El PyME que tuvo un mal cliente lo sabe.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CASO ESTRELLA ══════════════════════════════════ -->
+<section class="caso-section">
+  <div class="caso-inner">
+    <div class="caso-eyebrow">Caso de uso — el más frecuente en PyMEs colombianas</div>
+    <h2 class="caso-ttl">"¿Acepto este nuevo cliente o proyecto?"</h2>
+    <p class="caso-sub">La pregunta que aparece cada semana y que la mayoría responde con optimismo — hasta que el cliente no paga.</p>
+
+    <div class="caso-grid">
+      <div class="caso-step">
+        <div class="caso-step-num">⏱ Gana tiempo</div>
+        <h4>5 minutos de análisis estructurado</h4>
+        <p>Druker triaga el cliente antes de que tengas que decidir: capacidad de pago, riesgo de concentración, margen real, señales de alerta.</p>
+      </div>
+      <div class="caso-step">
+        <div class="caso-step-num">🎯 Tiene sentido</div>
+        <h4>Una recomendación con criterio</h4>
+        <p>No te da una lista de pros y contras — te dice qué haría y por qué, con el contexto de tu empresa y tu historial de clientes anteriores.</p>
+      </div>
+      <div class="caso-step">
+        <div class="caso-step-num">💰 Protege tu caja</div>
+        <h4>El cliente malo identificado antes de firmar</h4>
+        <p>Un cliente con cartera morosa o un proyecto de bajo margen puede costarte meses de flujo de caja. Druker lo detecta con preguntas que tú no te estás haciendo.</p>
+      </div>
+      <div class="caso-step">
+        <div class="caso-step-num">🧠 + DRUKER Score</div>
+        <h4>La decisión queda registrada</h4>
+        <p>Druker recuerda qué decidiste y el resultado real. La próxima vez que aparezca un cliente similar, ya sabe qué buscar — y tu ICRE refleja la calidad de tu criterio.</p>
+      </div>
+    </div>
+
+    <div class="caso-result">
+      <div class="caso-result-ico">💬</div>
+      <p><strong>"El cliente pintaba bien, pero Druker me mostró que dependía de un solo contrato del Estado y que sus márgenes no soportaban mi precio."</strong> — Ese análisis habría tomado semanas de due diligence informal. Con Druker, 8 minutos.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TRUST BAR ════════════════════════════════════ -->
+<div class="trust-bar">
+  <div class="trust-inner">
+    <div class="trust-item">
+      <div class="trust-item-ico">🔬</div>
+      <div class="trust-item-txt">Basado en <strong>investigación con McKinsey, Globant y Designit</strong> sobre la PyME latinoamericana</div>
+    </div>
+    <div class="trust-divider"></div>
+    <div class="trust-item">
+      <div class="trust-item-ico">🧠</div>
+      <div class="trust-item-txt">Impulsado por <strong>Claude (Anthropic)</strong> · Modelo de IA de clase mundial</div>
+    </div>
+    <div class="trust-divider"></div>
+    <div class="trust-item">
+      <div class="trust-item-ico">📊</div>
+      <div class="trust-item-txt"><strong>DRUKER Score</strong> · Tu índice de riesgo decisional, único y acumulativo</div>
+    </div>
+    <div class="trust-divider"></div>
+    <div class="trust-item">
+      <div class="trust-item-ico">🔒</div>
+      <div class="trust-item-txt"><strong>Sesión privada</strong> · Tu perfil no se comparte con nadie</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DOLOR VALIDADO ════════════════════════════════ -->
+<section class="dolor-section">
+  <div class="dolor-inner">
+    <div class="dolor-eyebrow">Lo que los gerentes nos dicen</div>
+    <h2 class="dolor-ttl">Estos dolores son reales.<br>DRUKER los resuelve con contexto.</h2>
+    <p class="dolor-sub">Validado con más de 80 fundadores y gerentes de pequeña y mediana empresa en Colombia. No es un chatbot genérico — es una respuesta a cómo deciden los gerentes reales.</p>
+
+    <div class="dolor-grid">
+      <div class="dolor-card">
+        <p class="dolor-quote">"No tengo idea de cómo agrandar mi negocio. Sobrevivimos y estamos bien... pero no sé cómo plantear una estrategia que me permita crecer."</p>
+        <div class="dolor-author">Gerente PyME · Sector servicios · Medellín</div>
+        <div class="dolor-resp">DRUKER construye tu perfil estratégico desde el día 1</div>
+      </div>
+      <div class="dolor-card">
+        <p class="dolor-quote">"Los de las medianas y pequeñas empresas nos dedicamos al día a día — lo urgente mata lo importante. Siempre."</p>
+        <div class="dolor-author">Fundador · Empresa de soluciones industriales · Bogotá</div>
+        <div class="dolor-resp">Las Situaciones Clave llevan lo importante al frente</div>
+      </div>
+      <div class="dolor-card">
+        <p class="dolor-quote">"Me da confianza que haya un entendimiento profundo y no una categorización. Que sea personalizado, que comprenda la esencia de mi empresa."</p>
+        <div class="dolor-author">Directora · Empresa creativa · Medellín</div>
+        <div class="dolor-resp">El arquetipo + el score hacen a DRUKER entender tu realidad</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CÓMO FUNCIONA ════════════════════════════════ -->
+<section class="section" id="como-funciona">
+  <div class="section-inner">
+    <div class="section-tag">Proceso</div>
+    <h2 class="section-ttl">Tres pasos para tener<br>tu asesor configurado</h2>
+    <p class="section-sub">El onboarding toma entre 10 y 15 minutos. Solo lo haces una vez — DRUKER IA queda listo para acompañarte desde el primer mensaje, con tu contexto completo.</p>
+
+    <div class="steps">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3>Perfil gerencial + empresa</h3>
+        <p>Respondes cómo tomas decisiones bajo presión y describes el momento actual de tu empresa. No hay respuestas correctas — buscamos cómo eres, no cómo te gustaría ser.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3>DRUKER IA carga tu contexto</h3>
+        <p>Archetype gerencial, situación financiera, riesgos estructurales, historial de decisiones. Todo disponible en cada sesión — sin que tengas que repetirlo.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3>Tu DRUKER Score crece contigo</h3>
+        <p>Cada decisión que registras alimenta tu Índice de Calidad de Riesgo Empresarial. Un número propio que ningún chat genérico puede darte.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DEMO INTERACTIVO ════════════════════════════════ -->
+<section class="comp-section" id="por-que-druker">
+  <div class="comp-inner">
+    <div class="section-tag">La diferencia es real</div>
+    <h2 class="section-ttl">Misma pregunta.<br>Tres respuestas completamente distintas.</h2>
+    <p class="section-sub" style="max-width:620px;margin-left:auto;margin-right:auto">Un chat genérico responde preguntas. Druker conoce tu historia, tus números y te dice lo que necesitas escuchar — no lo que quieres oír.</p>
+
+    <!-- Selector de escenarios -->
+    <div class="demo-scenarios">
+      <button class="demo-scenario-btn active" onclick="landingScenario(0)">🏙️ Abrir en Medellín</button>
+      <button class="demo-scenario-btn" onclick="landingScenario(1)">💰 Inversionista al 20%</button>
+      <button class="demo-scenario-btn" onclick="landingScenario(2)">👥 Motivar el equipo</button>
+      <button class="demo-scenario-btn" onclick="landingScenario(3)">⚡ ¿Despedir al gerente de ventas?</button>
+    </div>
+
+    <!-- Pregunta activa -->
+    <div class="demo-question">
+      <span class="demo-question-label">El gerente pregunta</span>
+      <span class="demo-question-text" id="ldQuestion">"Quiero abrir en Medellín, creo que es el momento"</span>
+    </div>
+
+    <!-- Tres columnas -->
+    <div class="demo-grid">
+      <div class="demo-col col-gpt">
+        <div class="demo-col-header">
+          <span class="demo-col-icon">🤖</span>
+          <span class="demo-col-name">ChatGPT</span>
+          <span class="demo-col-tag tag-generic">Genérico</span>
+        </div>
+        <div class="demo-col-body" id="ldGpt"></div>
+      </div>
+      <div class="demo-col col-claude">
+        <div class="demo-col-header">
+          <span class="demo-col-icon">💬</span>
+          <span class="demo-col-name">Claude sin configurar</span>
+          <span class="demo-col-tag tag-generic">Sin contexto</span>
+        </div>
+        <div class="demo-col-body" id="ldClaude"></div>
+      </div>
+      <div class="demo-col col-druker">
+        <div class="demo-col-header">
+          <span class="demo-col-icon">✦</span>
+          <span class="demo-col-name">DRUKER IA</span>
+          <span class="demo-col-tag tag-druker">Con tu contexto</span>
+        </div>
+        <div class="demo-col-body" id="ldDruker"></div>
+      </div>
+    </div>
+
+    <!-- ── CAMBIO 3: CTA prominente al demo en lugar del link de texto ── -->
+    <div class="demo-cta-block">
+      <div class="demo-cta-copy">
+        <div class="demo-cta-eyebrow">Demo interactivo · Sin registro</div>
+        <div class="demo-cta-title">Habla con Druker ahora mismo — con el caso real de Servitek SAS ya cargado</div>
+        <div class="demo-cta-sub">Sin tarjeta · Sin formulario · Responde en segundos</div>
+      </div>
+      <a href="/demo" class="btn-demo-cta">Entrar al demo →</a>
+    </div>
+
+    <p class="comp-note">DRUKER IA está construido sobre <strong>Claude (Anthropic)</strong>. La diferencia no es el modelo — es el <strong>contexto que llevamos contigo</strong>.</p>
+  </div>
+</section>
+
+<script>
+const LD_SCENARIOS = [
+  {
+    q: '"Quiero abrir en Medellín, creo que es el momento"',
+    gpt: `<p>¡Expandirse a una nueva ciudad puede ser una gran oportunidad! Considera estos pasos clave:</p><ul><li>Investiga la competencia local en tu sector</li><li>Define un plan financiero con punto de equilibrio</li><li>Asegúrate de que la operación actual esté estabilizada</li></ul><p><strong>Recomendación:</strong> empieza con un piloto de 2-3 meses con clientes ancla.</p>`,
+    claude: `<p>La expansión merece análisis cuidadoso. <strong>¿Qué te indica que este es el momento?</strong> ¿Tienes demanda inbound desde Medellín o es una intuición de crecimiento?</p><p>El capital requerido suele subestimarse — una apertura B2B implica 6 a 18 meses antes de alcanzar rentabilidad.</p>`,
+    druker: `<p>Espera. Esta misma conversación la tuvimos hace seis semanas. Decidiste que primero ibas a resolver los costos logísticos en Bogotá antes de pensar en Medellín. <strong>¿Eso ya está resuelto?</strong></p><p>Te lo pregunto porque los números que me diste la semana pasada dicen otra cosa: 22 días de caja y EBITDA en −8%. Abrir una segunda sede desde esa base no es crecer — es multiplicar el problema por dos.</p><p><strong>¿Qué te está generando la urgencia ahora mismo? Respóndeme eso primero.</strong></p>`
+  },
+  {
+    q: '"Hay un inversionista interesado en el 20% de la empresa"',
+    gpt: `<p>¡Qué buena noticia! Para evaluar esta oportunidad considera:</p><ul><li>¿Cuánto dinero ofrece por ese 20%? Eso define la valoración implícita</li><li>Revisa las condiciones: derechos de veto, cláusulas de liquidación</li><li>¿Aporta capital únicamente o también red de contactos?</li></ul><p>Antes de decidir, ten un abogado corporativo que revise el term sheet.</p>`,
+    claude: `<p><strong>¿Qué problema resuelve este capital?</strong> Si es para financiar crecimiento rentable, tiene sentido. Si es para tapar un problema de flujo de caja, estás vendiendo equity para ganar tiempo.</p><p>La valoración lo es todo. El 20% puede ser excelente o una cesión enorme dependiendo de la cifra implícita. ¿Tienes urgencia de cerrar esto pronto?</p>`,
+    druker: `<p>Buena noticia, pero necesito hacerte preguntas incómodas antes de que te emociones.</p><p>En enero decidiste que no ibas a levantar capital hasta tener el EBITDA positivo. Con 22 días de caja hoy, entiendo la presión — pero levantar desde una posición de necesidad casi siempre lleva a condiciones desfavorables. <strong>El inversionista lo sabe.</strong></p><p><strong>¿Quién es? ¿Qué te da además del dinero? ¿Qué te pide a cambio del control?</strong> Respóndeme eso y seguimos.</p>`
+  },
+  {
+    q: '"¿Cómo motivo mejor a mi equipo?"',
+    gpt: `<p>Motivar un equipo es uno de los retos más importantes. Estrategias que funcionan:</p><ul><li>Comunica claramente la visión — cómo cada persona contribuye</li><li>Define metas concretas y medibles por rol</li><li>Celebra los logros, incluso los pequeños</li><li>Crea espacios para que propongan e innoven</li></ul>`,
+    claude: `<p>Antes de diseñar estrategias, vale la pena diagnosticar la raíz. La desmotivación puede tener causas muy diferentes.</p><p><strong>Motivación intrínseca vs extrínseca.</strong> Si el problema es falta de propósito, la solución es conectar el rol con el impacto real. Si es que el esfuerzo no se reconoce, el camino es diferente.</p><p>¿Qué señales concretas ves que te dicen que hay desmotivación?</p>`,
+    druker: `<p>En las últimas cuatro sesiones has mencionado que el equipo está "un poco desmotivado" — pero nunca hemos llegado al fondo. Siempre aparece otro tema más urgente.</p><p>Mi hipótesis: cuando una empresa lleva tres años, tiene el EBITDA negativo, y el CEO está constantemente mirando hacia afuera — Medellín, inversores, nuevas líneas — el equipo lo percibe. <strong>No es un problema de motivación. Es un problema de información y de señales.</strong></p><p>¿Cuándo fue la última vez que le presentaste al equipo con honestidad cómo está el negocio?</p>`
+  },
+  {
+    q: '"¿Debo dejar ir a mi gerente de ventas?"',
+    gpt: `<p>Tomar la decisión de separarte de alguien es difícil pero a veces necesaria. Cómo evaluarlo:</p><ul><li>¿Está cumpliendo las metas acordadas?</li><li>¿El problema es de habilidades, motivación o recursos?</li><li>¿Ha tenido retroalimentación clara y oportunidades de mejorar?</li></ul><p>Si decides proceder: documenta el soporte y consulta un abogado laboral.</p>`,
+    claude: `<p><strong>¿El problema es la persona o el sistema?</strong> Si las ventas no crecen, ¿es porque el gerente falla en su ejecución, o porque el producto o proceso tiene problemas que nadie podría resolver?</p><p>¿Qué tan irreemplazable es su conocimiento? En empresas pequeñas, la salida de alguien con relaciones clave puede tener un costo mayor que el problema que intentas resolver.</p>`,
+    druker: `<p>La última vez que mencionaste a Rodrigo fue hace tres sesiones. Dijiste que era "el único del equipo que realmente entiende cómo venderle a clientes corporativos." Hoy quieres dejarlo ir. <strong>¿Qué cambió entre esa sesión y esta?</strong></p><p>Tengo una hipótesis: con la caja en 22 días y la presión que eso genera, es posible que estés buscando un responsable visible para un problema más estructural.</p><p><strong>Antes de decidir: ¿cuáles son las metas que tenía acordadas y cuánto está lejos de ellas?</strong></p>`
+  }
+];
+
+function landingScenario(idx) {
+  document.querySelectorAll('.demo-scenario-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+  const s = LD_SCENARIOS[idx];
+  document.getElementById('ldQuestion').textContent = s.q;
+  document.getElementById('ldGpt').innerHTML    = s.gpt;
+  document.getElementById('ldClaude').innerHTML = s.claude;
+  document.getElementById('ldDruker').innerHTML = s.druker;
+}
+landingScenario(0);
+</script>
+
+<!-- ══ DRUKER SCORE TEASER ════════════════════════════ -->
+<section class="score-teaser">
+  <div class="score-teaser-inner">
+    <div class="score-teaser-copy">
+      <div class="st-eyebrow">DRUKER Score · ICRE</div>
+      <h2>El primer número que mide cómo decides como gerente</h2>
+      <p>El Índice de Calidad de Riesgo Empresarial (ICRE) es un score de 0 a 100 que se construye con el tiempo, a medida que registras decisiones, contexto financiero y resultados reales.</p>
+      <ul>
+        <li><strong>Salud financiera</strong> — capital, deuda, concentración de clientes</li>
+        <li><strong>Calidad decisional</strong> — alternativas evaluadas, responsables definidos</li>
+        <li><strong>Disciplina de ejecución</strong> — decisiones completadas vs pendientes</li>
+        <li><strong>Resultado de decisiones</strong> — qué tan buenas resultaron ser</li>
+        <li><strong>Riesgo estructural</strong> — nivel de riesgo promedio de tus decisiones</li>
+      </ul>
+    </div>
+    <div class="score-visual">
+      <div class="sv-label">DRUKER Score — ICRE</div>
+      <div class="sv-score">72 <span>/ 100</span></div>
+      <div class="sv-nivel">🟡 Riesgo moderado — en mejora</div>
+      <div class="sv-bar-track"><div class="sv-bar-fill"></div></div>
+      <div class="sv-comps">
+        <div class="sv-comp">
+          <div class="sv-comp-name">Salud financiera</div>
+          <div class="sv-comp-bar-track"><div class="sv-comp-bar-fill" style="width:83%"></div></div>
+          <div class="sv-comp-pts">25/30</div>
+        </div>
+        <div class="sv-comp">
+          <div class="sv-comp-name">Calidad decisional</div>
+          <div class="sv-comp-bar-track"><div class="sv-comp-bar-fill" style="width:60%"></div></div>
+          <div class="sv-comp-pts">12/20</div>
+        </div>
+        <div class="sv-comp">
+          <div class="sv-comp-name">Disciplina ejec.</div>
+          <div class="sv-comp-bar-track"><div class="sv-comp-bar-fill" style="width:55%"></div></div>
+          <div class="sv-comp-pts">11/20</div>
+        </div>
+        <div class="sv-comp">
+          <div class="sv-comp-name">Resultado decis.</div>
+          <div class="sv-comp-bar-track"><div class="sv-comp-bar-fill" style="width:67%"></div></div>
+          <div class="sv-comp-pts">10/15</div>
+        </div>
+        <div class="sv-comp">
+          <div class="sv-comp-name">Riesgo estructural</div>
+          <div class="sv-comp-bar-track"><div class="sv-comp-bar-fill" style="width:70%"></div></div>
+          <div class="sv-comp-pts">7/10</div>
+        </div>
+      </div>
+      <div class="sv-msg">💡 Registra el resultado de tus últimas 3 decisiones completadas para subir tu score de calidad decisional.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ARQUETIPOS ════════════════════════════════════ -->
+<section class="section section-alt" id="arquetipos">
+  <div class="section-inner">
+    <div class="section-tag">Arquetipos Gerenciales</div>
+    <h2 class="section-ttl">DRUKER se calibra a cómo tú decides</h2>
+    <p class="section-sub">No eres un gerente genérico. Identificamos tu arquetipo entre 5 perfiles de toma de decisiones. DRUKER IA cambia su enfoque, tono y énfasis según quién eres.</p>
+
+    <div class="arch-grid">
+      <div class="arch-card ac1">
+        <div class="ac-ico">🛡️</div>
+        <div class="ac-name">Gerente Prudente</div>
+        <div class="ac-quote">"Primero sobrevivir, luego pensar en crecer"</div>
+      </div>
+      <div class="arch-card ac2">
+        <div class="ac-ico">🚀</div>
+        <div class="ac-name">Gerente Dinámico</div>
+        <div class="ac-quote">"Si no crecemos, nos quedamos atrás"</div>
+      </div>
+      <div class="arch-card ac3">
+        <div class="ac-ico">🤝</div>
+        <div class="ac-name">Gerente Colaborativo</div>
+        <div class="ac-quote">"Prefiero decidir con otros que decidir mal solo"</div>
+      </div>
+      <div class="arch-card ac4">
+        <div class="ac-ico">📊</div>
+        <div class="ac-name">Gerente Analítico</div>
+        <div class="ac-quote">"Quiero decidir bien... pero aún no tengo toda la información"</div>
+      </div>
+      <div class="arch-card ac5">
+        <div class="ac-ico">🔭</div>
+        <div class="ac-name">Gerente Visionario</div>
+        <div class="ac-quote">"Yo veo el panorama completo — el equipo ejecuta"</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BENEFICIOS ════════════════════════════════════ -->
+<section class="section" id="beneficios">
+  <div class="section-inner">
+    <div class="section-tag">Lo que obtienes</div>
+    <h2 class="section-ttl">Un asesor que te conoce<br>desde el primer mensaje</h2>
+    <p class="section-sub">No te dice el qué — te da el cómo, el cuándo y con qué. Accionable, contextualizado, listo para usar.</p>
+
+    <div class="benefits">
+      <div class="benefit-card">
+        <div class="benefit-ico">🎯</div>
+        <div>
+          <h4>Consejo calibrado a tu arquetipo</h4>
+          <p>DRUKER sabe si eres prudente, dinámico o analítico. Cambia su enfoque según cómo tú decides — no según un protocolo estándar igual para todos.</p>
+        </div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-ico">🏢</div>
+        <div>
+          <h4>Contexto real de tu empresa siempre cargado</h4>
+          <p>Industria, situación financiera, riesgos estructurales. Conecta Siigo o Alegra, sube tu balance en Excel o ingresa tus números directamente — DRUKER los usa en cada sesión sin que tengas que repetir nada.</p>
+        </div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-ico">📊</div>
+        <div>
+          <h4>DRUKER Score — tu índice decisional propio</h4>
+          <p>El ICRE mide la calidad de tus decisiones en el tiempo. Un número que crece (o te alerta) con cada decisión que registras. Ningún chat genérico tiene esto.</p>
+        </div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-ico">💡</div>
+        <div>
+          <h4>Situaciones Clave prediseñadas</h4>
+          <p>17 momentos de verdad del gerente PyME ya estructurados como prompts: desde cerrar una negociación hasta decidir si expandirse. Arranca en segundos.</p>
+        </div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-ico">📌</div>
+        <div>
+          <h4>Historial de decisiones con seguimiento</h4>
+          <p>Registra, da seguimiento y cierra el ciclo de cada decisión. Con responsables, fechas límite, notas de avance y resultado real al completarlas.</p>
+        </div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-ico">⚡</div>
+        <div>
+          <h4>Disponible cuando lo necesitas, sin agenda</h4>
+          <p>Accede desde operatia.co en cualquier dispositivo. Sin citas, sin esperas, sin honorarios por hora. Tu asesor está donde estás tú.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ INTEGRACIÓN FINANCIERA ════════════════════════ -->
+<section class="section section-alt" id="integraciones">
+  <div class="section-inner">
+    <div class="section-tag">Tus números, sin fricción</div>
+    <h2 class="section-ttl">DRUKER conoce la caja<br>antes de que hables</h2>
+    <p class="section-sub">Conecta tu contabilidad en un clic o sube tu balance. DRUKER lee tus indicadores financieros reales y los usa como marco de cada conversación — con la caja siempre como prioridad.</p>
+
+    <div class="steps" style="margin-top:2rem">
+      <div class="step-card" style="text-align:left">
+        <div style="font-size:2rem;margin-bottom:.875rem">🔌</div>
+        <h3>Conecta Siigo o Alegra</h3>
+        <p>Vincula tu cuenta con un correo y una llave de acceso. DRUKER lee tus indicadores directamente desde tu contabilidad — sin exportar, sin copiar, sin perder tiempo.</p>
+        <div style="margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
+          <span style="background:#EFF6FF;color:#1D4ED8;font-size:.72rem;font-weight:700;padding:.25rem .75rem;border-radius:100px;border:1px solid #BFDBFE">Siigo</span>
+          <span style="background:#EFF6FF;color:#1D4ED8;font-size:.72rem;font-weight:700;padding:.25rem .75rem;border-radius:100px;border:1px solid #BFDBFE">Alegra</span>
+          <span style="background:#F0FDF4;color:#059669;font-size:.72rem;font-weight:700;padding:.25rem .75rem;border-radius:100px;border:1px solid #BBF7D0">Próximamente más</span>
+        </div>
+      </div>
+      <div class="step-card" style="text-align:left">
+        <div style="font-size:2rem;margin-bottom:.875rem">📊</div>
+        <h3>Sube tu balance en Excel</h3>
+        <p>Arrastra tu balance general o pre-balance. DRUKER extrae automáticamente ingresos, caja, cartera, inventario, cuentas por pagar, deuda y más — sin importar el formato del archivo.</p>
+        <div style="margin-top:1rem">
+          <span style="background:#FFF7ED;color:#C2410C;font-size:.72rem;font-weight:700;padding:.25rem .75rem;border-radius:100px;border:1px solid #FED7AA">.xlsx · .xls · cualquier estructura</span>
+        </div>
+      </div>
+      <div class="step-card" style="text-align:left">
+        <div style="font-size:2rem;margin-bottom:.875rem">✏️</div>
+        <h3>Ingresa los datos tú mismo</h3>
+        <p>Si prefieres control total, registra los indicadores del mes directamente. Solo llena los campos que conoces — con ingresos, EBITDA y caja es suficiente para que DRUKER calcule tu score.</p>
+        <div style="margin-top:1rem">
+          <span style="background:#F8FAFC;color:#64748B;font-size:.72rem;font-weight:700;padding:.25rem .75rem;border-radius:100px;border:1px solid #E2E8F0">Capital de trabajo · CapEx · Impuestos · y más</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:2.5rem;background:linear-gradient(135deg,#0F1E35,#1D3461);border-radius:18px;padding:1.75rem 2rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap">
+      <div style="flex:1;min-width:220px">
+        <div style="font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:.5rem">Siempre en contexto</div>
+        <div style="font-size:1.05rem;font-weight:700;color:#fff;line-height:1.45">DRUKER sabe cuántos días de caja tienes, si el capital de trabajo es positivo y si hay impuestos pendientes — antes de que empieces a hablar.</div>
+      </div>
+      <a href="/onboarding" style="flex-shrink:0;background:#1D4ED8;color:#fff;text-decoration:none;padding:.875rem 1.75rem;border-radius:12px;font-weight:800;font-size:.92rem;white-space:nowrap">Conectar mis números →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA ════════════════════════════════════════════ -->
+<section class="cta-section">
+  <div style="position:relative;z-index:1">
+    <div class="section-tag" style="color:var(--blue2)">Empieza hoy</div>
+    <h2>Una mala decisión cuesta más<br>que <em>30 días gratis</em> de Druker</h2>
+    <p>Crea tu perfil, cuéntale a Druker una decisión que tengas encima — y en 10 minutos tienes claridad. Sin reuniones. Sin consultores. Sin permanencia.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;align-items:center">
+      <a href="/onboarding" class="btn-hero" style="font-size:1.05rem;padding:1.1rem 2.5rem">
+        Empezar con una decisión real →
+      </a>
+      <a href="/demo" style="display:inline-flex;align-items:center;gap:.5rem;padding:1.1rem 1.75rem;border-radius:12px;border:1.5px solid rgba(45,155,138,.5);background:rgba(45,155,138,.1);color:#3aafa9;font-size:.95rem;font-weight:600;text-decoration:none;transition:all .2s" onmouseover="this.style.background='rgba(45,155,138,.2)';this.style.color='#fff'" onmouseout="this.style.background='rgba(45,155,138,.1)';this.style.color='#3aafa9'">
+        Probar demo gratis →
+      </a>
+    </div>
+    <div style="margin-top:1rem">
+      <a href="/inicio" style="color:rgba(255,255,255,.35);font-size:.82rem;font-weight:500;text-decoration:none;transition:color .2s" onmouseover="this.style.color='rgba(255,255,255,.6)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Ya tengo perfil → Entrar</a>
+    </div>
+    <div class="cta-time">10–15 minutos para configurar · 30 días sin costo · <strong style="color:#fff">desde USD 85/mes</strong> · <a href="/precios" style="color:var(--blue2);text-decoration:none">ver planes →</a></div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ════════════════════════════════════════ -->
+<footer>
+  <div class="f-logo">Operat<span>-IA</span></div>
+  <div class="f-copy">© 2026 JVstratica SAS · Operat-IA. Todos los derechos reservados.</div>
+  <div class="f-links">
+    <a href="/onboarding">Crear perfil</a>
+    <a href="/demo">Demo</a>
+    <a href="/inicio">Mi perfil</a>
+    <a href="mailto:contacto@jvstratica.com">Contacto</a>
+    <a href="/privacidad">Privacidad</a>
+    <a href="/consultor">Acceso consultores</a>
+  </div>
+</footer>
+
+<!-- ── CAPTURA DE CÓDIGO DE REFERIDO ─────────────── -->
+<script>
+(function(){
+  const ref = new URLSearchParams(window.location.search).get('ref');
+  if (ref && /^[a-zA-Z0-9_-]{4,40}$/.test(ref)) {
+    localStorage.setItem('druker_ref', ref);
+  }
+})();
+</script>
+
+<!-- ── BOTÓN FLOTANTE CONTACTO ─────────────────────── -->
+<style>
+.fab-contact {
+  position: fixed; bottom: 1.75rem; right: 1.75rem; z-index: 9999;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: #1D4ED8; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(29,78,216,.4);
+  transition: transform .2s, box-shadow .2s;
+}
+.fab-contact:hover { transform: scale(1.1); box-shadow: 0 8px 32px rgba(29,78,216,.55); }
+.fab-tooltip {
+  position: absolute; right: 66px; background: #0F1E35; color: #fff;
+  font-size: .78rem; font-weight: 600; padding: .45rem .875rem;
+  border-radius: 8px; white-space: nowrap; pointer-events: none;
+  opacity: 0; transition: opacity .2s; font-family: 'Inter', sans-serif; line-height: 1.4;
+}
+.fab-contact:hover .fab-tooltip { opacity: 1; }
+</style>
+<script src="/js/support-widget.js"></script>
+<a href="mailto:drukeria@operatia.co?subject=Consulta%20Operat-IA" class="fab-contact" title="Contáctanos">
+  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+  <span class="fab-tooltip">¿Tienes dudas?<br>Escríbenos →</span>
+</a>
+
+</body>
+</html>

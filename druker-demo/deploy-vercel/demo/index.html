@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo · Druker IA · Operatia</title>
+<meta name="description" content="Habla con Druker, el primer asesor gerencial de IA para PyMEs colombianas. Demo gratuito, sin registro.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #0d1a22;
+  --surface: #132430;
+  --raised:  #1a2f3c;
+  --overlay: #0a1219;
+  --teal:    #2d9b8a;
+  --teal-lt: #3aafa9;
+  --teal-d:  rgba(45,155,138,0.14);
+  --teal-b:  rgba(45,155,138,0.28);
+  --gold:    #e8a020;
+  --gold-d:  rgba(232,160,32,0.11);
+  --gold-b:  rgba(232,160,32,0.26);
+  --ok:      #4caf78;
+  --err:     #e05555;
+  --t1: #ffffff;
+  --t2: rgba(255,255,255,0.74);
+  --t3: rgba(255,255,255,0.44);
+  --t4: rgba(255,255,255,0.22);
+  --br: rgba(255,255,255,0.09);
+  --br2:rgba(255,255,255,0.16);
+  --f: 'Inter', system-ui, sans-serif;
+  --mono: 'SF Mono', 'Fira Code', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; background: var(--bg); color: var(--t1); font-family: var(--f); font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+/* ── LAYOUT ── */
+#app { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+
+/* ── NAV ── */
+nav {
+  flex-shrink: 0; background: var(--overlay);
+  border-bottom: 1px solid var(--br);
+  height: 52px; display: flex; align-items: center;
+  justify-content: space-between; padding: 0 20px;
+}
+.logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+.logo-d {
+  width: 28px; height: 28px; border-radius: 6px;
+  background: var(--teal); display: flex; align-items: center;
+  justify-content: center; font-size: 13px; font-weight: 700; color: #fff;
+}
+.logo-name { font-size: 15px; font-weight: 600; color: var(--t1); letter-spacing: -.01em; }
+.nav-cta {
+  display: inline-flex; align-items: center;
+  padding: 7px 14px; background: var(--teal); color: #fff;
+  border-radius: 7px; font-size: 13px; font-weight: 600;
+  text-decoration: none; transition: background .15s;
+}
+.nav-cta:hover { background: var(--teal-lt); }
+
+/* ── DEMO BAND ── */
+.demo-band {
+  flex-shrink: 0; background: var(--overlay);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  padding: 6px 20px; display: flex; align-items: center;
+  justify-content: center; gap: 7px; font-size: 11px; flex-wrap: wrap;
+}
+.demo-pill {
+  padding: 2px 8px; background: var(--teal-d);
+  border: 1px solid var(--teal-b); border-radius: 9999px;
+  font-size: 10px; font-weight: 600; letter-spacing: .05em;
+  text-transform: uppercase; color: var(--teal);
+}
+.demo-band span { color: var(--t3); }
+.demo-band strong { color: var(--t1); font-weight: 600; }
+
+/* ── COMPANY HEADER ── */
+.co-header {
+  flex-shrink: 0; background: var(--surface);
+  border-bottom: 1px solid var(--br);
+  padding: 13px 20px; display: flex;
+  align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+}
+.co-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.co-icon {
+  width: 40px; height: 40px; border-radius: 8px;
+  background: var(--teal-d); border: 1px solid var(--teal-b);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.co-name { font-size: 15px; font-weight: 600; letter-spacing: -.01em; margin-bottom: 2px; }
+.co-meta { font-size: 11px; color: var(--t3); margin-bottom: 5px; }
+.co-metrics { font-size: 12px; color: var(--t2); display: flex; flex-wrap: wrap; gap: 3px 10px; }
+.co-metrics b { color: var(--t1); font-weight: 600; }
+.co-decision {
+  display: inline-flex; align-items: center; gap: 5px;
+  margin-top: 6px; padding: 4px 10px;
+  background: var(--gold-d); border: 1px solid var(--gold-b);
+  border-radius: 6px; font-size: 11px; color: var(--gold); font-weight: 500;
+}
+
+/* ICRE BADGE */
+.score-wrap { display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0; position: relative; cursor: default; }
+.score-ring {
+  width: 60px; height: 60px; border-radius: 50%;
+  border: 2.5px solid var(--teal); background: var(--bg);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  box-shadow: 0 0 16px rgba(45,155,138,.18);
+}
+.score-n { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--teal); line-height: 1; }
+.score-d { font-size: 9px; color: var(--t4); line-height: 1.2; }
+.score-lbl { font-size: 9px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--t3); }
+.score-tip {
+  display: none; position: absolute; top: 100%; right: 0; margin-top: 8px;
+  background: var(--raised); border: 1px solid var(--br2);
+  border-radius: 8px; padding: 10px 14px; width: 210px;
+  font-size: 11px; color: var(--t2); line-height: 1.6; z-index: 20;
+  box-shadow: 0 8px 24px rgba(0,0,0,.5);
+}
+.score-wrap:hover .score-tip { display: block; }
+
+/* ── CHAT ── */
+.chat {
+  flex: 1; overflow-y: auto; padding: 22px 20px;
+  display: flex; flex-direction: column; gap: 16px;
+  scroll-behavior: smooth;
+}
+.chat::-webkit-scrollbar { width: 4px; }
+.chat::-webkit-scrollbar-thumb { background: rgba(255,255,255,.07); border-radius: 2px; }
+
+.row { display: flex; gap: 10px; }
+.row.user { flex-direction: row-reverse; margin-left: auto; }
+.row { max-width: 760px; width: 100%; }
+
+.av {
+  width: 32px; height: 32px; flex-shrink: 0; align-self: flex-start;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: #fff;
+}
+.av.d { background: var(--teal); border-radius: 6px; }
+.av.u { background: rgba(255,255,255,.10); border-radius: 50%; font-size: 11px; }
+
+.bbl { padding: 13px 17px; font-size: 15px; line-height: 1.7; white-space: pre-wrap; word-break: break-word; }
+.bbl.d {
+  background: var(--surface); border-left: 3px solid var(--teal);
+  border-radius: 0 10px 10px 10px; max-width: 680px; color: var(--t1);
+}
+.bbl.u {
+  background: var(--raised); border-right: 3px solid rgba(255,255,255,.12);
+  border-radius: 10px 0 10px 10px; max-width: 520px; color: var(--t1);
+}
+
+/* Typing */
+.typing { display: flex; gap: 10px; align-items: center; max-width: 760px; }
+.dots {
+  padding: 13px 17px; background: var(--surface);
+  border-left: 3px solid var(--teal); border-radius: 0 10px 10px 10px;
+  display: flex; gap: 5px; align-items: center;
+}
+.dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--teal); animation: dp 1.2s ease-in-out infinite;
+}
+.dot:nth-child(2) { animation-delay: .2s; }
+.dot:nth-child(3) { animation-delay: .4s; }
+@keyframes dp {
+  0%,60%,100% { opacity: .3; transform: scale(.85); }
+  30% { opacity: 1; transform: scale(1); }
+}
+
+/* CTA */
+.cta {
+  max-width: 760px; width: 100%;
+  padding: 18px 22px; background: var(--surface);
+  border: 1px solid var(--teal-b); border-radius: 10px;
+  box-shadow: 0 0 20px rgba(45,155,138,.06);
+}
+.cta-eye {
+  font-size: 10px; font-weight: 600; letter-spacing: .10em;
+  text-transform: uppercase; color: var(--teal); margin-bottom: 8px;
+}
+.cta-title {
+  font-size: 14px; font-weight: 600; color: var(--t1);
+  margin-bottom: 12px; letter-spacing: -.01em;
+}
+.cta-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.cta-item { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--t2); line-height: 1.5; }
+.ck {
+  width: 16px; height: 16px; border-radius: 50%;
+  background: rgba(76,175,120,.16); border: 1px solid rgba(76,175,120,.32);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; color: var(--ok); flex-shrink: 0; margin-top: 1px;
+}
+.cta-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn-p {
+  display: inline-flex; align-items: center;
+  padding: 9px 18px; background: var(--teal); color: #fff;
+  border: none; border-radius: 7px; font-family: var(--f);
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  text-decoration: none; transition: background .15s;
+}
+.btn-p:hover { background: var(--teal-lt); }
+.btn-s {
+  display: inline-flex; align-items: center;
+  padding: 9px 14px; background: transparent; color: var(--t3);
+  border: 1px solid var(--br); border-radius: 7px; font-family: var(--f);
+  font-size: 13px; font-weight: 500; cursor: pointer;
+  transition: color .15s, border-color .15s;
+}
+.btn-s:hover { color: var(--t1); border-color: var(--br2); }
+
+/* ── INPUT ── */
+.input-wrap {
+  flex-shrink: 0; padding: 13px 20px;
+  border-top: 1px solid var(--br); background: var(--bg);
+}
+.input-row {
+  display: flex; gap: 10px; align-items: flex-end;
+  max-width: 760px; margin: 0 auto;
+}
+#inp {
+  flex: 1; background: var(--raised);
+  border: 1px solid rgba(255,255,255,.14); border-radius: 10px;
+  padding: 12px 15px; font-family: var(--f); font-size: 15px;
+  color: var(--t1); resize: none; outline: none; line-height: 1.5;
+  min-height: 48px; max-height: 160px;
+  transition: border-color .15s, box-shadow .15s;
+}
+#inp::placeholder { color: var(--t4); }
+#inp:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(45,155,138,.11); }
+#sbtn {
+  padding: 12px 18px; background: var(--teal); color: #fff;
+  border: none; border-radius: 10px; font-family: var(--f);
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  white-space: nowrap; align-self: flex-end;
+  transition: background .15s, opacity .15s;
+}
+#sbtn:hover:not(:disabled) { background: var(--teal-lt); }
+#sbtn:disabled { opacity: .38; cursor: not-allowed; }
+.hint { font-size: 10px; color: var(--t4); text-align: right; margin-top: 5px; max-width: 760px; margin-inline: auto; }
+#err { display: none; font-size: 12px; color: var(--err); margin-top: 6px; padding: 7px 12px; background: rgba(224,85,85,.07); border: 1px solid rgba(224,85,85,.20); border-radius: 6px; max-width: 760px; margin-inline: auto; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  nav, .demo-band, .co-header, .chat, .input-wrap { padding-inline: 14px; }
+  .bbl { padding: 11px 13px; font-size: 14px; }
+  .score-tip { right: -60px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dot { animation: none; opacity: .55; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+<nav>
+  <a href="/" class="logo">
+    <div class="logo-d">D</div>
+    <span class="logo-name">Druker IA</span>
+  </a>
+  <a href="/onboarding" class="nav-cta">Crear cuenta gratis →</a>
+</nav>
+
+<div class="demo-band">
+  <span class="demo-pill">Demo</span>
+  <span>Estás en la sesión de</span>
+  <span><strong>Carlos Mendoza · Servitek SAS</strong></span>
+  <span>· Sin registro requerido</span>
+</div>
+
+<div class="co-header">
+  <div class="co-left">
+    <div class="co-icon">🏭</div>
+    <div>
+      <div class="co-name">Servitek SAS</div>
+      <div class="co-meta">Carlos Mendoza · Gerente Pragmático · Cali · 18 empleados · 7 años</div>
+      <div class="co-metrics">
+        <span>Caja: <b>38 días</b></span>
+        <span>Ventas: <b>$280M/mes</b></span>
+        <span>Margen: <b>14%</b></span>
+        <span>Cartera: <b>62 días</b></span>
+      </div>
+      <div class="co-decision">📌 Decisión activa: ¿Acepto el contrato de Textilcol SA?</div>
+    </div>
+  </div>
+  <div class="score-wrap">
+    <div class="score-ring">
+      <span class="score-n">68</span>
+      <span class="score-d">/100</span>
+    </div>
+    <span class="score-lbl">DRUKER Score</span>
+    <div class="score-tip">Este score se construye con cada decisión que registras. En tu cuenta real crece con el tiempo y mide 7 dimensiones de calidad decisional.</div>
+  </div>
+</div>
+
+<div class="chat" id="chat"></div>
+
+<div class="input-wrap">
+  <div class="input-row">
+    <textarea id="inp" placeholder="Respóndele a Druker..." rows="2" autocomplete="off"></textarea>
+    <button id="sbtn" disabled>Enviar →</button>
+  </div>
+  <div class="hint">Enter para enviar · Shift+Enter para nueva línea</div>
+  <div id="err"></div>
+</div>
+
+</div>
+<script>
+const MSGS = [
+  { role:'user',      content:'Druker, necesito pensar contigo algo que me tiene con la cabeza dando vueltas. Me llegó un cliente grande — Textilcol SA, empresa textil de Cali. Me están ofreciendo un contrato de mantenimiento por $80 millones de pesos. Nunca hemos tenido un contrato tan grande. No sé si aceptar o si nos va a quebrar la operación.' },
+  { role:'assistant', content:'Carlos, entiendo el nudo. $80 millones es casi el 29% de tu facturación mensual promedio en un solo contrato — eso cambia la estructura de riesgo de Servitek de forma significativa, para bien o para mal.\n\nAntes de darte una recomendación, necesito hacerte tres preguntas que determinan todo lo demás:\n\n¿Cuánto tiempo tienes para decidir? ¿Textilcol te presiona con una fecha? ¿El contrato es por proyecto único o es recurrente mensual? ¿Tienes alguna referencia de Textilcol — cómo pagan, cómo tratan a sus proveedores?\n\nCon eso, puedo darte una respuesta que puedas llevar a una reunión de junta.' }
+];
+
+let loading = false, showCTA = false, dismissed = false, turns = 0;
+
+const chat  = document.getElementById('chat');
+const inp   = document.getElementById('inp');
+const sbtn  = document.getElementById('sbtn');
+const errEl = document.getElementById('err');
+
+function render() {
+  chat.innerHTML = '';
+  MSGS.forEach(m => chat.appendChild(bubble(m)));
+  if (loading) chat.appendChild(typingEl());
+  if (showCTA && !dismissed) chat.appendChild(ctaEl());
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function bubble(m) {
+  const row = el('div', 'row' + (m.role === 'user' ? ' user' : ''));
+  const av  = el('div', 'av ' + (m.role === 'assistant' ? 'd' : 'u'));
+  av.textContent = m.role === 'assistant' ? 'D' : 'CM';
+  const b = el('div', 'bbl ' + (m.role === 'assistant' ? 'd' : 'u'));
+  b.textContent = m.content;
+  row.append(av, b);
+  return row;
+}
+
+function typingEl() {
+  const row = el('div', 'typing');
+  const av  = el('div', 'av d'); av.textContent = 'D';
+  const ds  = el('div', 'dots');
+  [1,2,3].forEach(() => ds.appendChild(el('div','dot')));
+  row.append(av, ds);
+  return row;
+}
+
+function ctaEl() {
+  const d = el('div', 'cta');
+  d.innerHTML = `
+    <div class="cta-eye">Estás en el demo de Druker</div>
+    <div class="cta-title">En tu cuenta real, Druker hace mucho más:</div>
+    <div class="cta-list">
+      <div class="cta-item"><div class="ck">✓</div><span>Recuerda esta conversación y todas las siguientes</span></div>
+      <div class="cta-item"><div class="ck">✓</div><span>Construye tu DRUKER Score con cada decisión registrada</span></div>
+      <div class="cta-item"><div class="ck">✓</div><span>Aprende tu contexto financiero real (Siigo / Alegra)</span></div>
+      <div class="cta-item"><div class="ck">✓</div><span>Detecta tus patrones de decisión en el tiempo</span></div>
+    </div>
+    <div class="cta-btns">
+      <a href="/onboarding" class="btn-p" id="cta-ok">Crear mi cuenta — 30 días gratis →</a>
+      <button class="btn-s" id="cta-no">Seguir en el demo</button>
+    </div>`;
+  setTimeout(() => {
+    document.getElementById('cta-no')?.addEventListener('click', () => { dismissed = true; render(); });
+    document.getElementById('cta-ok')?.addEventListener('click', () => track('demo_cta_clicked'));
+  }, 0);
+  return d;
+}
+
+function el(tag, cls) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  return e;
+}
+
+function showErr(msg) { errEl.textContent = msg; errEl.style.display = 'block'; }
+function hideErr()    { errEl.style.display = 'none'; }
+
+function updateBtn() {
+  sbtn.disabled = loading || !inp.value.trim();
+  sbtn.textContent = loading ? 'Analizando...' : 'Enviar →';
+}
+
+function track(name, props) {
+  try { window.gtag?.('event', name, props); window.posthog?.capture(name, props); } catch {}
+}
+
+async function send() {
+  const text = inp.value.trim();
+  if (!text || loading) return;
+  MSGS.push({ role: 'user', content: text });
+  inp.value = ''; inp.style.height = 'auto';
+  loading = true; hideErr(); updateBtn(); render();
+
+  try {
+    const r = await fetch('/api/demo-chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: MSGS })
+    });
+    const d = await r.json();
+    if (!r.ok) {
+      if (r.status === 429) { showCTA = true; dismissed = false; track('demo_rate_limit'); }
+      else showErr(d.error || 'Algo salió mal. Intenta de nuevo.');
+      return;
+    }
+    MSGS.push({ role: 'assistant', content: d.message });
+    turns = d.turnCount;
+    if (d.showCTA && !dismissed) { showCTA = true; track('demo_cta_shown', { turn: turns }); }
+    track('demo_message_sent', { turn: turns });
+  } catch { showErr('Error de conexión. Intenta de nuevo.'); }
+  finally { loading = false; updateBtn(); render(); inp.focus(); }
+}
+
+inp.addEventListener('input', () => {
+  updateBtn();
+  inp.style.height = 'auto';
+  inp.style.height = Math.min(inp.scrollHeight, 160) + 'px';
+});
+inp.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } });
+sbtn.addEventListener('click', send);
+
+render();
+inp.focus();
+track('demo_started');
+</script>
+</body>
+</html>
